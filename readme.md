@@ -1,10 +1,10 @@
 # Books 4 u
 
-npx creat-expo-app <project-name> --template
+npx creat-expo-app \<project-name\> --template
 
 (Select Blank)
 
-cd <project-name>
+cd \<project-name\>
 
 npx expo install react-native-web react-dom @expo/metro-runtime
 
