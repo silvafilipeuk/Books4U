@@ -69,12 +69,13 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: 'white'
+        backgroundColor: 'white',
+        padding: '5%'
     },
     box: {
         display: 'flex',
         alignItems: 'center',
-        backgroundColor: '#40A578',
+        backgroundColor: '#E2DFD0',
         width: '100%',
         marginTop: 0,
         marginBottom: 10,
