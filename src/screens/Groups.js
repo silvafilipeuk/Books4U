@@ -1,4 +1,4 @@
-import { Image, FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Header from '../components/Header';
 import React from 'react';
 import Footer from '../components/Footer';
@@ -37,7 +37,7 @@ export default function Groups(){
         }
     ]
     const renderBook = ({item}) => (
-        <View style={styles.box}>
+        <TouchableOpacity style={styles.box}>
             <Text style={styles.groupName}>{item.name}</Text>
             <Text>Genre:</Text>
             <Text>{item.genre}</Text>
@@ -46,7 +46,7 @@ export default function Groups(){
             <TouchableOpacity style={styles.button}>
                 <Text>Click to join 📚</Text>
             </TouchableOpacity>
-        </View>
+        </TouchableOpacity>
     )
 
     return(
@@ -66,7 +66,7 @@ export default function Groups(){
 }
 const styles = StyleSheet.create({
     screen: {
-        flex: 1,
+        flex: 8,
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: 'white',
