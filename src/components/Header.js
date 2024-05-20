@@ -1,10 +1,10 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Image } from 'react-native';
 import Constants from 'expo-constants';
 
 export default function Header() {
   return (
     <View style = {styles.header}>
-      <Text style = {styles.text}> Books4U </Text>
+      <Image source={require('../../assets/logo-png.png')} style={styles.image}></Image>
     </View>
   );
 }
@@ -21,5 +21,10 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 18,
     fontWeight: "900"
+  },
+  image: {
+    width: 400,
+    height: 100,
+    resizeMode: 'contain'
   }
 });
