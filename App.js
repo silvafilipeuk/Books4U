@@ -72,9 +72,7 @@ export default function App() {
 						<CreateGroup {...props} GlobalState={GlobalState} />
 					)}
 				</Stack.Screen>
-				<Stack.Screen name="SignUp" options={{ headerShown: false }}>
-					{(props) => <SignUp {...props} GlobalState={GlobalState} />}
-				</Stack.Screen>
+				
 			</Stack.Navigator>
 		</NavigationContainer>
 	);
