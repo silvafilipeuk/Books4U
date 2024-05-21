@@ -5,7 +5,7 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 
 export default function Home({ navigation, GlobalState }) {
-	const { count, setCount } = GlobalState;
+	const { session, count, setCount } = GlobalState;
 
 	useEffect(() => {
 		setCount((prevCount) => prevCount + 1);
@@ -15,7 +15,7 @@ export default function Home({ navigation, GlobalState }) {
 		<View style={styles.screen}>
 			<Header />
 			<View style={styles.body}>
-				<Text> Body of App </Text>
+				<Text> Logged as: {session.user.email}</Text>
 			</View>
 			<Footer navigation={navigation} />
 		</View>
