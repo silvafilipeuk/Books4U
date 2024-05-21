@@ -3,7 +3,7 @@ import Header from '../components/Header';
 import React from 'react';
 import Footer from '../components/Footer';
 
-export default function Groups(){
+export default function Groups({navigation}){
     const groups = [
         {
             id: 1,
@@ -37,7 +37,10 @@ export default function Groups(){
         }
     ]
     const renderBook = ({item}) => (
-        <TouchableOpacity style={styles.box}>
+        <TouchableOpacity style={styles.box} 
+        onPress={() => {
+            navigation.navigate('Group', {id: item.id})
+        }}>
             <Text style={styles.groupName}>{item.name}</Text>
             <Text>Genre:</Text>
             <Text>{item.genre}</Text>
