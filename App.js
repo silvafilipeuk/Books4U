@@ -4,7 +4,8 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import Home from "./src/screens/Home";
 import Login from "./src/screens/Login";
-import ForgotPassword from "./src/screens/forgotPassword";
+import ForgotPassword from "./src/screens/ForgotPassword";
+import CreateGroup from "./src/screens/CreateGroup";
 
 const Stack = createNativeStackNavigator();
 
@@ -22,7 +23,7 @@ export default function App() {
 
 	return (
 		<NavigationContainer>
-			<Stack.Navigator initialRouteName="Login">
+			<Stack.Navigator initialRouteName="CreateGroup">
 				<Stack.Screen name="Login" options={{ headerShown: false }}>
 					{(props) => <Login {...props} GlobalState={GlobalState} />}
 				</Stack.Screen>
@@ -35,6 +36,14 @@ export default function App() {
 				>
 					{(props) => (
 						<ForgotPassword {...props} GlobalState={GlobalState} />
+					)}
+				</Stack.Screen>
+				<Stack.Screen
+					name="CreateGroup"
+					options={{ headerShown: false }}
+				>
+					{(props) => (
+						<CreateGroup {...props} GlobalState={GlobalState} />
 					)}
 				</Stack.Screen>
 			</Stack.Navigator>

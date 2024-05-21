@@ -1,18 +1,15 @@
 import React, { useState, useEffect } from "react";
-import {
-	StyleSheet,
-	Text,
-	View,
-	TextInput,
-	Button,
-	Pressable,
-} from "react-native";
+import { StyleSheet, Text, View, TextInput, Pressable } from "react-native";
 
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 
-export default function Home({ navigation, GlobalState }) {
-	const [formData, setFormData] = useState({ username: "", email: "" });
+export default function CreateGroup({ navigation, GlobalState }) {
+	const [formData, setFormData] = useState({
+		groupname: "",
+		description: "",
+		genre: "",
+	});
 
 	const handleChange = (name, value) => {
 		setFormData({ ...formData, [name]: value });
@@ -26,29 +23,39 @@ export default function Home({ navigation, GlobalState }) {
 		<View style={styles.screen}>
 			<Header />
 			<View style={styles.body}>
-				<Text style={styles.headerText}>Forgot my password</Text>
+				<Text style={styles.headerText}>Creating a group.</Text>
 
-				<Text>Username:</Text>
+				<Text style={styles.Title}>Group Name:</Text>
 				<TextInput
 					style={styles.input}
-					placeholder="Username"
+					placeholder="Group Name"
 					value={formData.username}
-					onChangeText={(value) => handleChange("username", value)}
+					onChangeText={(value) => handleChange("groupname", value)}
 				/>
-				<Text>E-mail:</Text>
+				<Text>Description:</Text>
+				<TextInput
+					multiline={true}
+					numberOfLines={4}
+					style={styles.description}
+					placeholder="Description"
+					secureTextEntry
+					value={formData.description}
+					onChangeText={(value) => handleChange("description", value)}
+				/>
+				<Text>Genre:</Text>
 				<TextInput
 					style={styles.input}
-					placeholder="E-mail"
+					placeholder="Genre"
 					secureTextEntry
-					value={formData.email}
-					onChangeText={(value) => handleChange("email", value)}
+					value={formData.genre}
+					onChangeText={(value) => handleChange("genre", value)}
 				/>
 				<Pressable
 					style={styles.buttons}
 					title="Log in"
 					onPress={handleSubmit}
 				>
-					<Text style={styles.text}>Submit</Text>
+					<Text style={styles.text}>Create Group</Text>
 				</Pressable>
 			</View>
 			<Footer navigation={navigation} />
@@ -66,13 +73,12 @@ const styles = StyleSheet.create({
 	body: {
 		backgroundColor: "#fff",
 		alignItems: "center",
-		justifyContent: "center",
 		marginTop: 0,
 	},
 	headerText: {
-		fontSize: 16,
+		fontSize: 20,
 		fontWeight: "bold",
-		padding: 10,
+		padding: 20,
 	},
 	subHeaderText: {
 		fontSize: 18,
@@ -84,13 +90,23 @@ const styles = StyleSheet.create({
 		marginBottom: 12,
 		paddingLeft: 8,
 		width: 300,
-		borderRadius: 20,
+		borderRadius: 5,
+		backgroundColor: "#d3d3d3",
+	},
+	description: {
+		height: 100,
+		borderColor: "gray",
+		borderWidth: 1,
+		marginBottom: 12,
+		paddingLeft: 8,
+		width: 300,
+		borderRadius: 5,
 		backgroundColor: "#d3d3d3",
 	},
 	buttons: {
 		width: 300,
 		backgroundColor: "black",
-		borderRadius: 20,
+		borderRadius: 5,
 		margin: 10,
 		padding: 12,
 	},
@@ -98,5 +114,9 @@ const styles = StyleSheet.create({
 		color: "white",
 		fontSize: 22,
 		textAlign: "center",
+	},
+	Title: {
+		fontSize: 16,
+		alignItems: "left",
 	},
 });
