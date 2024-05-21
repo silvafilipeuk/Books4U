@@ -63,7 +63,7 @@ export default function Groups({navigation}){
                 showsVerticalScrollIndicator={false}
                 />
             </View>
-            <Footer />
+            <Footer navigation = {navigation} />
         </React.Fragment>
     )
 }

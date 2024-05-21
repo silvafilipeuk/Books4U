@@ -8,6 +8,7 @@ import ForgotPassword from "./src/screens/ForgotPassword";
 import Groups from "./src/screens/Groups";
 import Group from "./src/screens/Group";
 import CreateGroup from "./src/screens/CreateGroup";
+import SignUp from "./src/screens/SignUp";
 
 
 const Stack = createNativeStackNavigator();
@@ -29,6 +30,9 @@ export default function App() {
 			<Stack.Navigator initialRouteName="Login">
 				<Stack.Screen name="Login" options={{ headerShown: false }}>
 					{(props) => <Login {...props} GlobalState={GlobalState} />}
+				</Stack.Screen>
+				<Stack.Screen name="SignUp" options={{ headerShown: false }}>
+					{(props) => <SignUp {...props} GlobalState={GlobalState} />}
 				</Stack.Screen>
 				<Stack.Screen name="Home" options={{ headerShown: false }}>
 					{(props) => <Home {...props} GlobalState={GlobalState} />}
