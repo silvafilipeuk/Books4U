@@ -2,7 +2,8 @@ import { StyleSheet, TouchableOpacity, View, Text, FlatList, Image } from "react
 import Footer from "../components/Footer";
 
 
-export default function Group(){
+export default function Group({navigation, route}){
+    const id = route.params
 
     const members = ['member 1', 'member 2', 'member 3', 'member 4', 'member 5']
 
@@ -13,13 +14,13 @@ export default function Group(){
     return(
         <View style={styles.body}>
             <View style={styles.top}>
-                <Text>Group 1</Text>
+                <Text>Group {id.id}</Text>
                 <TouchableOpacity>
                     <Text>Leave Group</Text>
                 </TouchableOpacity>
             </View>
             <View style={styles.group}>
-                <Text style={styles.groupName}>You joined Group 1</Text>
+                <Text style={styles.groupName}>You joined Group {id.id}</Text>
                 <Text style={styles.members}>Members</Text>
                 <FlatList 
                 data={members}
@@ -48,13 +49,13 @@ const styles = StyleSheet.create({
     top:{
         flexDirection: 'row',
         justifyContent: 'space-between',
-        marginTop: '20%'
+        marginTop: '0%'
     },
     group:{
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: '#E2DFD0',
-        marginTop: '15%',
+        marginTop: '5%',
         borderRadius: 5,
         padding: 5
     },
