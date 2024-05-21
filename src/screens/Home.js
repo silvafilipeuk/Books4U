@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View } from "react-native";
+import { getUsers, supabase } from "../utils/SupabaseClient";
 
 import Header from "../components/Header";
 import Footer from "../components/Footer";
