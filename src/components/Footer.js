@@ -1,28 +1,50 @@
-import { StyleSheet, Text, View } from "react-native";
-import Icon from "react-native-vector-icons/AntDesign";
+import { StyleSheet, Text, View } from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 export default function Footer({ navigation }) {
-	return (
-		<View style={styles.footer}>
-			<Icon
-				name="home"
-				size={30}
-				onPress={() => navigation.navigate("Login")}
-			/>
-		</View>
-	);
+  return (
+    <View style = {styles.footer}>
+      <View style= {styles.wrap}>
+      <Icon style={styles.icon}
+        name = 'home'
+        size = {34}
+        onPress = {() => navigation.navigate('Home')}
+      />
+      <Icon style={styles.icon}
+        name = 'user-plus'
+        size = {34}
+        onPress = {() => navigation.navigate('SignUp')}
+      />
+      <Icon style={styles.icon}
+        name = 'group'
+        size = {34}
+        onPress = {() => navigation.navigate('Groups')}
+      />
+    </View>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
-	footer: {
-		flex: 1,
-		width: "100%",
-		alignItems: "center",
-		justifyContent: "center",
-		backgroundColor: "white",
-	},
-	text: {
-		fontSize: 18,
-		fontWeight: "900",
-	},
+  footer: {
+    flex: 1,
+    width: "100%",
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'white',
+    
+  },
+  text: {
+    fontSize: 18,
+    fontWeight: "900"
+  },
+  wrap:{
+
+    flexDirection:'row',
+    justifyContent:'space-around'
+  },
+  icon:{
+
+    marginHorizontal:20
+  }
 });

@@ -44,6 +44,9 @@ export default function App() {
 				<Stack.Screen name="Login" options={{ headerShown: false }}>
 					{(props) => <Login {...props} GlobalState={GlobalState} />}
 				</Stack.Screen>
+				<Stack.Screen name="SignUp" options={{ headerShown: false }}>
+					{(props) => <SignUp {...props} GlobalState={GlobalState} />}
+				</Stack.Screen>
 				<Stack.Screen name="Home" options={{ headerShown: false }}>
 					{(props) => <Home {...props} GlobalState={GlobalState} />}
 				</Stack.Screen>
