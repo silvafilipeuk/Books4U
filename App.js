@@ -7,6 +7,8 @@ import Login from "./src/screens/Login";
 import ForgotPassword from "./src/screens/forgotPassword";
 import Groups from "./src/screens/Groups";
 import Group from "./src/screens/Group";
+import CreateGroup from "./src/screens/CreateGroup";
+
 
 const Stack = createNativeStackNavigator();
 
@@ -24,7 +26,7 @@ export default function App() {
 
 	return (
 		<NavigationContainer>
-			<Stack.Navigator initialRouteName="Login">
+			<Stack.Navigator initialRouteName="CreateGroup">
 				<Stack.Screen name="Login" options={{ headerShown: false }}>
 					{(props) => <Login {...props} GlobalState={GlobalState} />}
 				</Stack.Screen>
@@ -44,6 +46,13 @@ export default function App() {
 				</Stack.Screen>
 				<Stack.Screen name="Group">
 					{(props) => <Group {...props} GlobalState={GlobalState} />}
+				<Stack.Screen
+					name="CreateGroup"
+					options={{ headerShown: false }}
+				>
+					{(props) => (
+						<CreateGroup {...props} GlobalState={GlobalState} />
+					)}
 				</Stack.Screen>
 			</Stack.Navigator>
 		</NavigationContainer>
