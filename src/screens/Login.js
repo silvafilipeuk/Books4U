@@ -116,6 +116,14 @@ export default function Login({ navigation, GlobalState }) {
 					>
 						<Text style={styles.text}>Log in</Text>
 					</Pressable>
+					<Pressable
+						title="Sign up"
+						onPress={() => navigation.navigate("SignUp")}
+					>
+						<Text style={styles.subHeaderText}>
+							Don't have an account yet? Sign Up!
+						</Text>
+					</Pressable>
 				</View>
 				<Footer navigation={navigation} />
 			</View>
