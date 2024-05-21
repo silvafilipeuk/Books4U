@@ -8,7 +8,7 @@ export default function Footer({ navigation }) {
       <Icon style={styles.icon}
         name = 'home'
         size = {34}
-        onPress = {() => navigation.navigate('Home')}
+        onPress = {() => navigation.navigate('Login')}
       />
       <Icon style={styles.icon}
         name = 'user-plus'

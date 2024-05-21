@@ -92,14 +92,17 @@ export default function Login({ navigation, GlobalState }) {
 					<Text style={styles.subHeaderText}>
 						Sign in to continue
 					</Text>
-					<Text>Email</Text>
+          <View style={styles.wrapper}>
+					<Text style={styles.bold}>   Email:</Text>
 					<TextInput
 						style={styles.input}
 						placeholder="Email"
 						value={formData.email}
 						onChangeText={(value) => handleChange("email", value)}
 					/>
-					<Text>Password</Text>
+          </View>
+          <View style={styles.wrapper}>
+					<Text style={styles.bold}>   Password:</Text>
 					<TextInput
 						style={styles.input}
 						placeholder="Password"
@@ -109,6 +112,8 @@ export default function Login({ navigation, GlobalState }) {
 							handleChange("password", value)
 						}
 					/>
+          </View>
+          <View style={styles.wrapper}>
 					<Pressable
 						style={styles.buttons}
 						title="Log in"
@@ -116,6 +121,7 @@ export default function Login({ navigation, GlobalState }) {
 					>
 						<Text style={styles.text}>Log in</Text>
 					</Pressable>
+          </View>
 					<Pressable
 						title="Sign up"
 						onPress={() => navigation.navigate("SignUp")}
@@ -153,7 +159,7 @@ const styles = StyleSheet.create({
 		padding: 10,
 	},
 	input: {
-		height: 40,
+		height: 48,
 		borderColor: "gray",
 		borderWidth: 1,
 		marginBottom: 12,
@@ -173,4 +179,10 @@ const styles = StyleSheet.create({
 		fontSize: 22,
 		textAlign: "center",
 	},
+  wrapper: {
+		marginTop: 20,
+	},
+  bold:{
+    fontWeight:'bold'
+  }
 });
