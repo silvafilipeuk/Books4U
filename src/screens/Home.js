@@ -14,11 +14,11 @@ export default function Home({ navigation, GlobalState }) {
 
 	return (
 		<View style={styles.screen}>
-			<Header />
+			<Header GlobalState={GlobalState} />
 			<View style={styles.body}>
 				<Text> Logged as: {session.user.email}</Text>
 			</View>
-			<Footer navigation={navigation} />
+			<Footer navigation={navigation} GlobalState={GlobalState} />
 		</View>
 	);
 }
