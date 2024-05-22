@@ -4,7 +4,6 @@ export default function BookCard({ book }) {
   const thumbnail = book.thumbnail;
   const author = book.author;
   const title = book.title;
-  console.log(author);
 
   return (
     <View style = {styles.container}>
@@ -20,7 +19,7 @@ export default function BookCard({ book }) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    //flex: 1,
     width: "100%",
     alignItems: 'center',
     justifyContent: 'center',
