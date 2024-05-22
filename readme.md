@@ -46,10 +46,23 @@ There will be navigation file at src/utils/navigation.js that will allow
 movement from one screen to another and also the user to return to
 the previous page.
 
-moveTo(pageName, remember=false)
+`moveTo(pageName, remember=false)`
 
 This will move to pageName and add the current page to history is the
 remember variable is set to true.
 
-moveBack()
+`moveBack()`
 
+## Book Object
+
+The books and book state use objects of the following format.
+
+```
+{
+  id: string,
+  title: string,
+  author: string,
+  thumbnail: string, - URL which can act as Image source uri
+  description: string
+}
+```
