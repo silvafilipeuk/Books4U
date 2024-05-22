@@ -26,7 +26,7 @@ export default function Footer({ navigation }) {
       <MaterialIcon style={styles.icon}
       name='group-add'
       size={34}
-      onPress = {() => navigation.navigate('Groups')}
+      onPress = {() => navigation.navigate('CreateGroup')}
       /> 
     </View>
     </View>
