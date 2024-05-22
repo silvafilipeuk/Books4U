@@ -21,46 +21,41 @@ export default function Group({ navigation, route, GlobalState }) {
 
 	const renderedMembers = ({ item }) => <Text>{item}</Text>;
 
-	return (
-		<View style={styles.body}>
-			<View style={styles.top}>
-				<Text>Group {id.id}</Text>
-				<TouchableOpacity>
-					<Text>Leave Group</Text>
-				</TouchableOpacity>
-			</View>
-			<View style={styles.group}>
-				<Text style={styles.groupName}>You joined Group {id.id}</Text>
-				<Text style={styles.members}>Members</Text>
-				<FlatList
-					data={members}
-					renderItem={renderedMembers}
-					keyExtractor={(item, index) => index.toString()}
-					style={styles.memberList}
-				/>
-				<Text style={styles.recommendations}>Top recommendations</Text>
-				<View style={styles.container}>
-					<Image
-						source={require("../../assets/gatsby.jpg")}
-						style={styles.Image}
-					/>
-					<Image
-						source={require("../../assets/Harry_Potter.jpg")}
-						style={styles.Image}
-					/>
-					<Image
-						source={require("../../assets/Million.webp")}
-						style={styles.Image}
-					/>
-					<Image
-						source={require("../../assets/Million.webp")}
-						style={styles.Image}
-					/>
-				</View>
-			</View>
-			<Footer GlobalState={GlobalState} navigation={navigation} />
-		</View>
-	);
+
+    const renderedMembers = ({item}) => (
+        <TouchableOpacity onPress={() => {
+            navigation.navigate('Member', {name: item})
+        }}><Text>{item}</Text></TouchableOpacity>
+    )
+
+    return(
+        <View style={styles.body}>
+            <View style={styles.top}>
+                <Text>Group {id.id}</Text>
+                <TouchableOpacity>
+                    <Text>Leave Group</Text>
+                </TouchableOpacity>
+            </View>
+            <View style={styles.group}>
+                <Text style={styles.groupName}>You joined Group {id.id}</Text>
+                <Text style={styles.members}>Members</Text>
+                <FlatList 
+                data={members}
+                renderItem={renderedMembers}
+                keyExtractor={(item, index) => index.toString()}
+                style={styles.memberList}/>
+                <Text style={styles.recommendations}>Top recommendations</Text>
+                <View style={styles.container}>
+                    <Image source={require('../../assets/gatsby.jpg')} style={styles.Image}/>
+                    <Image source={require('../../assets/Harry_Potter.jpg')} style={styles.Image}/>
+                    <Image source={require('../../assets/Million.webp')} style={styles.Image}/>
+                    <Image source={require('../../assets/Million.webp')} style={styles.Image}/>
+                </View>
+            </View>
+            <Footer />
+        </View>
+    )
+
 }
 
 const styles = StyleSheet.create({
