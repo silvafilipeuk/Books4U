@@ -20,7 +20,6 @@ import { AppState } from "react-native";
 
 import BookReview from "./src/screens/BookReview";
 
-
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -36,7 +35,6 @@ export default function App() {
 			supabase.auth.stopAutoRefresh();
 		}
 	});
-
 
 	const [session, setSession] = useState(Session || null);
 	const [book, setBook] = useState(null);
@@ -58,7 +56,7 @@ export default function App() {
 		book,
 		setBook,
 		books,
-		setBooks
+		setBooks,
 	};
 
 	// Navigation.
@@ -101,17 +99,22 @@ export default function App() {
 					)}
 				</Stack.Screen>
 
-				<Stack.Screen name="BookReview" options={{ headerShown: false }}>
-					{(props) => <BookReview {...props} GlobalState={GlobalState} />}
-
+				<Stack.Screen
+					name="BookReview"
+					options={{ headerShown: false }}
+				>
+					{(props) => (
+						<BookReview {...props} GlobalState={GlobalState} />
+					)}
+				</Stack.Screen>
 				<Stack.Screen name="Member">
-					{(props) => <Member {...props} GlobalState={GlobalState}/>}
+					{(props) => <Member {...props} GlobalState={GlobalState} />}
 				</Stack.Screen>
 				<Stack.Screen name="Results">
-					{(props) => <Results {...props} GlobalState={GlobalState}/>}
-
+					{(props) => (
+						<Results {...props} GlobalState={GlobalState} />
+					)}
 				</Stack.Screen>
-
 			</Stack.Navigator>
 		</NavigationContainer>
 	);
