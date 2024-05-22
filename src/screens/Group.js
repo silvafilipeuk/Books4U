@@ -8,7 +8,9 @@ export default function Group({navigation, route}){
     const members = ['member 1', 'member 2', 'member 3', 'member 4', 'member 5']
 
     const renderedMembers = ({item}) => (
-        <Text>{item}</Text>
+        <TouchableOpacity onPress={() => {
+            navigation.navigate('Member', {name: item})
+        }}><Text>{item}</Text></TouchableOpacity>
     )
 
     return(
