@@ -10,6 +10,7 @@ import SignUp from "./src/screens/SignUp";
 import CreateGroup from "./src/screens/CreateGroup";
 import { supabase } from "./src/utils/SupabaseClient";
 import { Session } from "@supabase/supabase-js";
+import Member from "./src/screens/Member";
 
 const Stack = createNativeStackNavigator();
 
@@ -71,6 +72,9 @@ export default function App() {
 					{(props) => (
 						<CreateGroup {...props} GlobalState={GlobalState} />
 					)}
+				</Stack.Screen>
+				<Stack.Screen name="Member">
+					{(props) => <Member {...props} GlobalState={GlobalState}/>}
 				</Stack.Screen>
 				
 			</Stack.Navigator>
