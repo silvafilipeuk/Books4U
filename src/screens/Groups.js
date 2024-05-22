@@ -2,6 +2,7 @@ import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native
 import Header from '../components/Header';
 import React from 'react';
 import Footer from '../components/Footer';
+import CreateGroup from './CreateGroup';
 
 export default function Groups({navigation}){
     const groups = [
@@ -63,9 +64,12 @@ export default function Groups({navigation}){
                 showsVerticalScrollIndicator={false}
                 />
             </View>
+
+            
             <Footer navigation = {navigation} />
         </React.Fragment>
     )
+    
 }
 const styles = StyleSheet.create({
     screen: {
