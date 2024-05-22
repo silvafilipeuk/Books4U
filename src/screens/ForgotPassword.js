@@ -17,7 +17,7 @@ export default function ForgotPassword({ navigation, GlobalState }) {
 
 	return (
 		<View style={styles.screen}>
-			<Header />
+			<Header GlobalState={GlobalState} />
 			<View style={styles.body}>
 				<Text style={styles.headerText}>Forgot my password</Text>
 
@@ -44,7 +44,7 @@ export default function ForgotPassword({ navigation, GlobalState }) {
 					<Text style={styles.text}>Submit</Text>
 				</Pressable>
 			</View>
-			<Footer navigation={navigation} />
+			<Footer navigation={navigation} GlobalState={GlobalState} />
 		</View>
 	);
 }

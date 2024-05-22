@@ -7,6 +7,7 @@ import Login from "./src/screens/Login";
 import ForgotPassword from "./src/screens/ForgotPassword";
 import Groups from "./src/screens/Groups";
 import Group from "./src/screens/Group";
+import Search from "./src/screens/Search";
 import SignUp from "./src/screens/SignUp";
 import CreateGroup from "./src/screens/CreateGroup";
 import Results from "./src/screens/Results";
@@ -14,12 +15,28 @@ import Member from "./src/screens/Member";
 
 import { supabase } from "./src/utils/SupabaseClient";
 import { Session } from "@supabase/supabase-js";
+
+import { AppState } from "react-native";
+
 import BookReview from "./src/screens/BookReview";
+
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
-	// Global state management.
+	// Tells Supabase Auth to continuously refresh the session automatically
+	// if the app is in the foreground. When this is added, you will continue
+	// to receive `onAuthStateChange` events with the `TOKEN_REFRESHED` or
+	// `SIGNED_OUT` event if the user's session is terminated. This should
+	// only be registered once.
+	AppState.addEventListener("change", (state) => {
+		if (state === "active") {
+			supabase.auth.startAutoRefresh();
+		} else {
+			supabase.auth.stopAutoRefresh();
+		}
+	});
+
 
 	const [session, setSession] = useState(Session || null);
 	const [book, setBook] = useState(null);
@@ -54,6 +71,9 @@ export default function App() {
 				</Stack.Screen>
 				<Stack.Screen name="SignUp" options={{ headerShown: false }}>
 					{(props) => <SignUp {...props} GlobalState={GlobalState} />}
+				</Stack.Screen>
+				<Stack.Screen name="Search" options={{ headerShown: false }}>
+					{(props) => <Search {...props} GlobalState={GlobalState} />}
 				</Stack.Screen>
 				<Stack.Screen name="Home" options={{ headerShown: false }}>
 					{(props) => <Home {...props} GlobalState={GlobalState} />}
@@ -91,7 +111,7 @@ export default function App() {
 					{(props) => <Results {...props} GlobalState={GlobalState}/>}
 
 				</Stack.Screen>
-				
+
 			</Stack.Navigator>
 		</NavigationContainer>
 	);

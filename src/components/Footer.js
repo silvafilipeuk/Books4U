@@ -34,25 +34,22 @@ export default function Footer({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-  footer: {
-    flex: 1,
-    width: "100%",
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: 'white',
-    
-  },
-  text: {
-    fontSize: 18,
-    fontWeight: "900"
-  },
-  wrap:{
-
-    flexDirection:'row',
-    justifyContent:'space-around'
-  },
-  icon:{
-
-    marginHorizontal:20
-  }
+	footer: {
+		flex: 1,
+		width: "100%",
+		alignItems: "center",
+		justifyContent: "center",
+		backgroundColor: "white",
+	},
+	text: {
+		fontSize: 18,
+		fontWeight: "900",
+	},
+	wrap: {
+		flexDirection: "row",
+		justifyContent: "space-around",
+	},
+	icon: {
+		marginHorizontal: 20,
+	},
 });
