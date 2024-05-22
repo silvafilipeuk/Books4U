@@ -11,6 +11,7 @@ import Search from "./src/screens/Search";
 import SignUp from "./src/screens/SignUp";
 import CreateGroup from "./src/screens/CreateGroup";
 import Results from "./src/screens/Results";
+import Detail from "./src/screens/Detail";
 import Member from "./src/screens/Member";
 
 import { supabase } from "./src/utils/SupabaseClient";
@@ -113,6 +114,11 @@ export default function App() {
 				<Stack.Screen name="Results">
 					{(props) => (
 						<Results {...props} GlobalState={GlobalState} />
+					)}
+				</Stack.Screen>
+				<Stack.Screen name="Detail">
+					{(props) => (
+						<Detail {...props} GlobalState={GlobalState} />
 					)}
 				</Stack.Screen>
 			</Stack.Navigator>
