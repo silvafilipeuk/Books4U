@@ -34,6 +34,7 @@ export default function Footer({ navigation }) {
 }
 
 const styles = StyleSheet.create({
+
   footer: {
     flex: 1,
     width: "100%",
@@ -61,4 +62,5 @@ const styles = StyleSheet.create({
 
     marginHorizontal:20
   }
+
 });

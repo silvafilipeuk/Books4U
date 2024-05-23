@@ -1,31 +1,23 @@
 import React, { useState, useEffect } from "react";
+
 import { StyleSheet, Text, View, TextInput, Pressable, KeyboardAvoidingView, Platform, TouchableWithoutFeedback, Keyboard } from "react-native";
-import { supabase } from "../utils/SupabaseClient";
+
+
+
+import { supabase, getUser } from "../utils/SupabaseClient";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { Alert } from "react-native";
+import Search from "./Search";
 
 export default function Login({ navigation, GlobalState }) {
 	const [formData, setFormData] = useState({ email: "", password: "" });
 	const [loading, setLoading] = useState(false);
-	let { session } = GlobalState;
+	let { session, setSession } = GlobalState;
 
 	const handleChange = (name, value) => {
 		setFormData({ ...formData, [name]: value });
 	};
-
-	async function handleLogout() {
-		setLoading(true);
-		setFormData({ email: "", password: "" });
-		let { error } = await supabase.auth.signOut();
-
-		if (error) {
-			setLoading(true);
-			Alert.alert(error.message);
-			setLoading(false);
-		}
-		setLoading(false);
-	}
 
 	async function handleLogin() {
 		if (formData.email === "") {
@@ -48,41 +40,24 @@ export default function Login({ navigation, GlobalState }) {
 			setFormData({ email: "", password: "" });
 		} else {
 			setLoading(false);
-			navigation.navigate("Home");
+			navigation.navigate("Search");
 		}
 	}
 
 	if (loading) {
 		return (
 			<View style={styles.screen}>
-				<Header />
+				<Header GlobalState={GlobalState} />
 				<View style={styles.body}>
 					<Text>Loading...</Text>
 				</View>
-				<Footer navigation={navigation} />
+				<Footer navigation={navigation} GlobalState={GlobalState} />
 			</View>
 		);
 	}
 
 	if (session && session.user) {
-		return (
-			<View style={styles.screen}>
-				<Header />
-				<View style={styles.body}>
-					<Text style={styles.subHeaderText}>
-						Logged as: {session.user.email}
-					</Text>
-					<Pressable
-						style={styles.buttons}
-						title="Log out"
-						onPress={handleLogout}
-					>
-						<Text style={styles.text}>Log Out</Text>
-					</Pressable>
-				</View>
-				<Footer navigation={navigation} />
-			</View>
-		);
+		return <Search navigation={navigation} GlobalState={GlobalState} />;
 	} else {
 		return (
 			<KeyboardAvoidingView
@@ -91,43 +66,46 @@ export default function Login({ navigation, GlobalState }) {
 		<TouchableWithoutFeedback onPress={Keyboard.dismiss}>
 			
 			<View style={styles.screen}>
-			<Header />
-				
+
+				<Header GlobalState={GlobalState} />
+
 				<View style={styles.body}>
 					<Text style={styles.headerText}>Login</Text>
 					<Text style={styles.subHeaderText}>
 						Sign in to continue
 					</Text>
-          <View style={styles.wrapper}>
-					<Text style={styles.bold}>   Email:</Text>
-					<TextInput
-						style={styles.input}
-						placeholder="Email"
-						value={formData.email}
-						onChangeText={(value) => handleChange("email", value)}
-					/>
-          </View>
-          <View style={styles.wrapper}>
-					<Text style={styles.bold}>   Password:</Text>
-					<TextInput
-						style={styles.input}
-						placeholder="Password"
-						secureTextEntry
-						value={formData.password}
-						onChangeText={(value) =>
-							handleChange("password", value)
-						}
-					/>
-          </View>
-          <View style={styles.wrapper}>
-					<Pressable
-						style={styles.buttons}
-						title="Log in"
-						onPress={handleLogin}
-					>
-						<Text style={styles.text}>Log in</Text>
-					</Pressable>
-          </View>
+					<View style={styles.wrapper}>
+						<Text style={styles.bold}> Email:</Text>
+						<TextInput
+							style={styles.input}
+							placeholder="Email"
+							value={formData.email}
+							onChangeText={(value) =>
+								handleChange("email", value)
+							}
+						/>
+					</View>
+					<View style={styles.wrapper}>
+						<Text style={styles.bold}> Password:</Text>
+						<TextInput
+							style={styles.input}
+							placeholder="Password"
+							secureTextEntry
+							value={formData.password}
+							onChangeText={(value) =>
+								handleChange("password", value)
+							}
+						/>
+					</View>
+					<View style={styles.wrapper}>
+						<Pressable
+							style={styles.buttons}
+							title="Log in"
+							onPress={handleLogin}
+						>
+							<Text style={styles.text}>Log in</Text>
+						</Pressable>
+					</View>
 					<Pressable
 						title="Sign up"
 						onPress={() => navigation.navigate("SignUp")}
@@ -137,7 +115,7 @@ export default function Login({ navigation, GlobalState }) {
 						</Text>
 					</Pressable>
 				</View>
-				<Footer navigation={navigation} />
+				<Footer navigation={navigation} GlobalState={GlobalState} />
 			</View>
 			</TouchableWithoutFeedback>
 			</KeyboardAvoidingView>
@@ -194,11 +172,13 @@ const styles = StyleSheet.create({
 		fontSize: 22,
 		textAlign: "center",
 	},
-  wrapper: {
+	wrapper: {
 		marginTop: 20,
 	},
 
-  bold:{
+bold:{
     fontWeight:'bold'
   }
 });
+
+

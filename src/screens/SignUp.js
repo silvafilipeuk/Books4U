@@ -15,7 +15,7 @@ import { supabase } from "../utils/SupabaseClient";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 
-export default function SignUp({ navigation }) {
+export default function SignUp({ navigation, GlobalState }) {
 	const [name, setName] = useState("");
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
@@ -92,11 +92,11 @@ export default function SignUp({ navigation }) {
 	if (loading) {
 		return (
 			<View style={styles.screen}>
-				<Header />
+				<Header GlobalState={GlobalState} />
 				<View style={styles.body}>
 					<Text>Loading...</Text>
 				</View>
-				<Footer navigation={navigation} />
+				<Footer navigation={navigation} GlobalState={GlobalState} />
 			</View>
 		);
 	}
@@ -104,7 +104,7 @@ export default function SignUp({ navigation }) {
 	if (submitted) {
 		return (
 			<View style={styles.screen}>
-				<Header />
+				<Header GlobalState={GlobalState} />
 				<ScrollView>
 					<View style={styles.body}>
 						<Text style={styles.signup}>
@@ -117,7 +117,7 @@ export default function SignUp({ navigation }) {
 					</View>
 				</ScrollView>
 
-				<Footer navigation={navigation} />
+				<Footer navigation={navigation} GlobalState={GlobalState} />
 			</View>
 		);
 	} else {
@@ -127,7 +127,7 @@ export default function SignUp({ navigation }) {
       style={styles.container}>
 		<TouchableWithoutFeedback onPress={Keyboard.dismiss}>
 			<View style={styles.screen}>
-				<Header />
+				<Header GlobalState={GlobalState} />
 				<ScrollView>
 					<View style={styles.body}>
 						<Text style={styles.headerText}>
@@ -189,7 +189,7 @@ export default function SignUp({ navigation }) {
 					</View>
 				</ScrollView>
 
-				<Footer navigation={navigation} />
+				<Footer navigation={navigation} GlobalState={GlobalState} />
 			</View>
 			</TouchableWithoutFeedback>
 			</KeyboardAvoidingView>

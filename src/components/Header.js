@@ -1,14 +1,42 @@
-import { StyleSheet, Text, View, Image } from 'react-native';
-import Constants from 'expo-constants';
+import { StyleSheet, Text, View, Image, Pressable } from "react-native";
+import Constants from "expo-constants";
+import { supabase } from "../utils/SupabaseClient";
 
-export default function Header() {
-  return (
-    <View style = {styles.header}>
-      <View style={styles.wrapper}>
-      <Image source={require('../../assets/logo-png.png')} style={styles.image}></Image>
-    </View>
-    </View>
-  );
+
+export default function Header({ GlobalState }) {
+	const { session } = GlobalState;
+
+	async function handleLogout() {
+		let { error } = await supabase.auth.signOut();
+
+		if (error) {
+			Alert.alert(error.message);
+		}
+	}
+
+	return (
+		<View style={styles.header}>
+        	<View style={styles.wrapper}>
+			<Image
+				source={require("../../assets/logo-png.png")}
+				style={styles.image}
+			></Image>
+
+
+			{session && session.user ? (
+			
+					<Text style={styles.text}>
+						{session.user.user_metadata.full_name} -
+					</Text>
+					<Pressable onPress={handleLogout}>
+						<Text style={styles.textLink}> Logout</Text>
+					</Pressable>
+				</View>
+			) : (
+				<Text></Text>
+			)}
+		</View>
+	);
 }
 
 const styles = StyleSheet.create({
@@ -40,3 +68,4 @@ const styles = StyleSheet.create({
     marginTop:50
   }
 });
+

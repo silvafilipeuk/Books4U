@@ -27,7 +27,7 @@ export default function CreateGroup({ navigation, GlobalState }) {
       style={styles.container}>
 		<TouchableWithoutFeedback onPress={Keyboard.dismiss}>
 		<View style={styles.screen}>
-			<Header />
+			<Header GlobalState={GlobalState} />
 			<View style={styles.body}>
 				<Text style={styles.headerText}>Creating a group.</Text>
 
@@ -64,7 +64,7 @@ export default function CreateGroup({ navigation, GlobalState }) {
 					<Text style={styles.text}>Create Group</Text>
 				</Pressable>
 			</View>
-			<Footer navigation={navigation} />
+			<Footer navigation={navigation} GlobalState={GlobalState} />
 		</View>
 		</TouchableWithoutFeedback>
 		</KeyboardAvoidingView>
