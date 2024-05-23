@@ -2,56 +2,45 @@
 
 import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Header from '../components/Header';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Footer from '../components/Footer';
+import { supabase } from '../utils/SupabaseClient';
 import CreateGroup from './CreateGroup';
 
 export default function Groups({ navigation, GlobalState }) {
-	const groups = [
-		{
-			id: 1,
-			name: "Group 1",
-			genre: "Comedy",
-			description: "blah blah blah ",
-		},
-		{
-			id: 2,
-			name: "Group 2",
-			genre: "Fantasy",
-			description:
-				"blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah  ",
-		},
-		{
-			id: 3,
-			name: "Group 3",
-			genre: "History",
-			description: "blah blah blah ",
-		},
-		{
-			id: 4,
-			name: "Group 4",
-			genre: "History",
-			description: "blah blah blah ",
-		},
-		{
-			id: 5,
-			name: "Group 5",
-			genre: "History",
-			description: "blah blah blah ",
-		},
-	];
+
+	const [fetchError, setFetchError] = useState(null)
+	const [groups, setGroups] = useState(null)
+
+	useEffect(() => {
+		const fetchGroups = async () =>{
+			const { data, error} = await supabase
+			.from('groups')
+			.select()
+
+			if(error){
+				setFetchError("cannot fetch groups")
+				setGroups(null)
+			}
+			if(data){
+				setGroups(data)
+				setFetchError(null)
+			}
+		}
+
+		fetchGroups()
+	},[])
+	
 	const renderBook = ({ item }) => (
 		<TouchableOpacity
 			style={styles.box}
 			onPress={() => {
-				navigation.navigate("Group", { id: item.id });
+				navigation.navigate("Group", { groupName: item.group_name });
 			}}
 		>
-			<Text style={styles.groupName}>{item.name}</Text>
-			<Text>Genre:</Text>
-			<Text>{item.genre}</Text>
+			<Text style={styles.groupName}>{item.group_name}</Text>
 			<Text>About us:</Text>
-			<Text>{item.description}</Text>
+			<Text>{item.group_description}</Text>
 			<TouchableOpacity style={styles.button}>
 				<Text>Click to join 📚</Text>
 			</TouchableOpacity>
@@ -63,7 +52,7 @@ export default function Groups({ navigation, GlobalState }) {
 			<Header GlobalState={GlobalState} />
 			<View style={styles.screen}>
 				<FlatList
-					keyExtractor={(item) => item.id}
+					keyExtractor={(item) => item.group_id}
 					data={groups}
 					renderItem={renderBook}
 					showsVerticalScrollIndicator={false}
