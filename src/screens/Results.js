@@ -4,41 +4,64 @@ import {
 	Text,
 	View,
 	FlatList,
-	ItemSeparatorComponent,
-	FlatListComponent,
+  SafeAreaView,
+  ActivityIndicator
 } from "react-native";
 
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import BookCard from "../components/BookCard";
 
-import { fetchBook, fetchBooks } from "../utils/books";
+import { fetchFromGoogle } from "../utils/books";
+import { searchMistral, parseResponse } from "../utils/mistral";
 
 export default function Results({ navigation, GlobalState }) {
-	const { count, setCount } = GlobalState;
+	const { searchQuery } = GlobalState;
+
 	const [book, setBook] = useState("");
 	const [books, setBooks] = useState([]);
-	const [isLoading, setIsLoading] = useState(true);
+	const [suggestedBooks, setSuggestedBooks] = useState([]);
+	const [isLoading, setIsLoading] = useState(false);
 
 	// Will expect title and author to be passed in globals.
 	const title = "Cold Comfort Farm";
 	const author = "Stella Gibbons";
 
+  useEffect(() => {
+    const query = searchQuery.trim();
+    if (query) {
+      setIsLoading(true);
+
+      searchMistral(query)
+        .then(response => {
+          const bookList = parseResponse(response);
+          setSuggestedBooks(bookList);
+          setIsLoading(false);
+        });
+    }
+  }, [searchQuery]);
+
 	useEffect(() => {
-		setIsLoading(true);
+    if (suggestedBooks.length > 0) {
+      setIsLoading(true);
 
-		fetchBooks(title, author).then((books) => {
-			setBooks([...books]);
-			setBook(books[0]);
-			setIsLoading(false);
-		});
-	}, []);
+      fetchFromGoogle(suggestedBooks)
+        .then((books) => {
+          setBooks([...books]);
+          setIsLoading(false);
+        });
+    }
+	}, [suggestedBooks]);
 
-	if (isLoading) return <Text>Loading...</Text>;
+	if (isLoading) return (
+    <View style={styles.screen}>
+      <ActivityIndicator />
+    </View>
+  );
 
 	return (
-		<View style={styles.screen}>
-			<Header GlobalState={GlobalState} />
+    <SafeAreaView style = {styles.screen}>
+      <Header GlobalState={GlobalState} />
 			<View style={styles.body}>
 				<FlatList
 					data={books}
@@ -49,8 +72,8 @@ export default function Results({ navigation, GlobalState }) {
 					)}
 				/>
 			</View>
-			<Footer navigation={navigation} GlobalState={GlobalState} />
-		</View>
+      <Footer navigation={navigation} GlobalState={GlobalState} />
+    </SafeAreaView>
 	);
 }
 
@@ -62,7 +85,7 @@ const styles = StyleSheet.create({
 		justifyContent: "center",
 	},
 	body: {
-		flex: 8,
+    flex: 8,
 		alignItems: "center",
 		justifyContent: "center",
 		width: "100%",
@@ -73,4 +96,7 @@ const styles = StyleSheet.create({
 		backgroundColor: "#f1f2f6",
 		margin: 30,
 	},
+  footer: {
+    justifyContent: "flex-end"
+  }
 });

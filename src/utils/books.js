@@ -22,18 +22,13 @@ const apiKey = "RO0bojds8YfNol2aq6C48HQ524FOeCRW";
 const client = new MistralClient(apiKey);
 
 export const searchMistral = async query => {
-  const [response, setResponse] = useState('');
-  const [responseString, setResponseString] = useState('');
-  const [isError, setIsError] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
-
   response = await client.chat({
     model: "open-mistral-7b",
     messages: [
       {
         role: "system",
         content:
-          "Always provide the result in JSON format with title, author, ISBN and description",
+          "Always provide the result in JSON format with title and author",
       },
       {
         role: "system",
@@ -53,7 +48,7 @@ export const searchMistral = async query => {
       {
         role: "system",
         content:
-          "Always try and provide 5 answers",
+          "Always try and provide at least 8 answers",
       },
       {
         role: "system",
@@ -64,6 +59,11 @@ export const searchMistral = async query => {
         role: "system",
         content:
           "Each result must have a different title",
+      },
+      {
+        role: "system",
+        content:
+          "Don't list books in the same series as any book mentioned",
       },
       {
         role: "user",
@@ -81,6 +81,49 @@ export const searchMistral = async query => {
     return text;
   })
 }
+
+const mistralResults = [
+  {
+    "author": "Jane Austen",
+    "title": "Pride and Prejudice",
+    "description": "A Romantic novel that tells the story of Mr. and Miss Bennet during the British Regency era.",
+  },
+  {
+    "author": "Jane Austen",
+    "title": "Emma",
+    "description": "A Romantic novel that follows the life of Emma Woodhouse, a young woman with a strong sense of self-worth who tries to matchmake for her acquaintances.",
+  },
+  {
+    "author": "Jane Austen",
+    "description": "A novel that explores the differing responses of the Dashwood sisters, Elinor and Marianne, to the intricacies of provincial life and the British social calendar.",
+    "title": "Sense and Sensibility"
+  },
+  {
+    "author": "Jane Austen",
+    "description": "A satirical epistolary novel that portrays the pitfalls of reading Gothic novels, and the dangers of judging people by first impressions.",
+    "title": "Northanger Abbey"
+  },
+  {
+    "author": "Jane Austen",
+    "description": "A novel that tells the story of Anne Elliot, a woman who was persuaded to break off her engagement to Frederick Wentworth eight years ago due to his lack of social status.",
+    "title": "Persuasion"
+  },
+  {
+    "author": "Jane Austen",
+    "description": "A novel that explores the themes of morality, education, and the nature of sustaining relationships.",
+    "title": "Mansfield Park"
+  },
+  {
+    "author": "Ann Radcliffe",
+    "description": "A popular Gothic novel about the chaste orphan Emily St. Aubert, who is orphaned at a young age and left to the care of her uncle.",
+    "title": "Mysteries of Udolpho"
+  },
+  {
+    "author": "Matthew Lewis",
+    "description": "A Gothic novel that tells the story of a monk who, after a life of sin, seeks redemption.",
+    "title": "The Monk"
+  }
+];
 
 function extractData(book) {
   const info = book.volumeInfo;
@@ -119,6 +162,34 @@ export function fetchBooks(title, author) {
 
   return api
     .get(query)
-    .then(({ data: { items: books }}) =>
-      filterBooks(books).map(book => extractData(book)));
+    .then(({ data: { items: books }}) => books);
+
+  //filterBooks(books).map(book => extractData(book)));
+}
+
+export function fetchFromGoogle(mistralResults) {
+  const makeRequest = request =>
+    request()
+      .catch(error => {
+        console.log('Error');
+        return Promise.reject(error);
+      });
+
+  const requests = mistralResults.map(result =>
+    makeRequest(() => fetchBooks(result.title, result.author)));
+
+  return Promise.all(requests)
+    .then(results => {
+      const selected = [];
+
+      for (const books of results) {
+        if (books) {
+          const possibles = filterBooks(books);
+          if (possibles.length > 0) {
+            selected.push(extractData(possibles[0]));
+          }
+        }
+      }
+      return selected;
+    });
 }
