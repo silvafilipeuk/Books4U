@@ -5,22 +5,34 @@ import { StyleSheet, Text, View, TextInput, Pressable,KeyboardAvoidingView,
 
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import { supabase } from "../utils/SupabaseClient";
 
 export default function CreateGroup({ navigation, GlobalState }) {
-	const [formData, setFormData] = useState({
-		groupname: "",
-		description: "",
-		genre: "",
-	});
+	
+	const[groupName,setGroupName]=useState('')
+	const[description, setDescription]=useState('')
+	
 
-	const handleChange = (name, value) => {
-		setFormData({ ...formData, [name]: value });
-	};
+	const addGroup =async(group_name, group_description) => {
+		
+			try{
+				const addToGroup = await supabase
+				.from('groups')
+				.insert({group_name, group_description})
+				setGroupName('')
+				setDescription('')
+			}
+			catch(err){
+				console.log(err)
+			}
+	
+	  }
+	
 
-	const handleSubmit = () => {
-		console.log(formData);
-	};
-
+	  const handlePress = () => {
+		addGroup(groupName, description);
+	  };
+	  
 	return (
 		<KeyboardAvoidingView
       behavior='height'keyboardVerticalOffset={-170}
@@ -35,8 +47,8 @@ export default function CreateGroup({ navigation, GlobalState }) {
 				<TextInput
 					style={styles.input}
 					placeholder="Group Name"
-					value={formData.username}
-					onChangeText={(value) => handleChange("groupname", value)}
+					value={groupName}
+					onChangeText={(value) => setGroupName(value)}
 				/>
 				<Text>Description:</Text>
 				<TextInput
@@ -45,21 +57,21 @@ export default function CreateGroup({ navigation, GlobalState }) {
 					style={styles.description}
 					placeholder="Description"
 					secureTextEntry
-					value={formData.description}
-					onChangeText={(value) => handleChange("description", value)}
+					value={description}
+					onChangeText={(value) =>setDescription(value)}
 				/>
-				<Text>Genre:</Text>
+				{/* <Text>Genre:</Text>
 				<TextInput
 					style={styles.input}
 					placeholder="Genre"
 					secureTextEntry
 					value={formData.genre}
 					onChangeText={(value) => handleChange("genre", value)}
-				/>
+				/> */}
 				<Pressable
 					style={styles.buttons}
 					title="Log in"
-					onPress={handleSubmit}
+					onPress={handlePress}
 				>
 					<Text style={styles.text}>Create Group</Text>
 				</Pressable>
