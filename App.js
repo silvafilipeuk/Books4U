@@ -117,9 +117,7 @@ export default function App() {
 					)}
 				</Stack.Screen>
 				<Stack.Screen name="Detail">
-					{(props) => (
-						<Detail {...props} GlobalState={GlobalState} />
-					)}
+					{(props) => <Detail {...props} GlobalState={GlobalState} />}
 				</Stack.Screen>
 			</Stack.Navigator>
 		</NavigationContainer>
