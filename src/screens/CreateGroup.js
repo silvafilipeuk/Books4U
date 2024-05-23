@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, Text, View, TextInput, Pressable } from "react-native";
+import { StyleSheet, Text, View, TextInput, Pressable,KeyboardAvoidingView,
+	TouchableWithoutFeedback,
+	Keyboard } from "react-native";
 
 import Header from "../components/Header";
 import Footer from "../components/Footer";
@@ -20,6 +22,10 @@ export default function CreateGroup({ navigation, GlobalState }) {
 	};
 
 	return (
+		<KeyboardAvoidingView
+      behavior='height'keyboardVerticalOffset={-170}
+      style={styles.container}>
+		<TouchableWithoutFeedback onPress={Keyboard.dismiss}>
 		<View style={styles.screen}>
 			<Header />
 			<View style={styles.body}>
@@ -60,6 +66,8 @@ export default function CreateGroup({ navigation, GlobalState }) {
 			</View>
 			<Footer navigation={navigation} />
 		</View>
+		</TouchableWithoutFeedback>
+		</KeyboardAvoidingView>
 	);
 }
 
@@ -69,6 +77,11 @@ const styles = StyleSheet.create({
 		backgroundColor: "#fff",
 		alignItems: "center",
 		justifyContent: "center",
+	},
+
+	container:{
+
+		flex:1
 	},
 	body: {
 		backgroundColor: "#fff",

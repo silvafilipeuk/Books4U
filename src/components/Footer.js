@@ -40,6 +40,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: 'white',
+   
     
   },
   text: {
@@ -49,7 +50,12 @@ const styles = StyleSheet.create({
   wrap:{
 
     flexDirection:'row',
-    justifyContent:'space-around'
+    justifyContent:'space-around',
+    position:'absolute',
+    left:0,
+    bottom:0,
+    right:0,
+    marginBottom:40
   },
   icon:{
 

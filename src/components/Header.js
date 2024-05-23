@@ -4,7 +4,9 @@ import Constants from 'expo-constants';
 export default function Header() {
   return (
     <View style = {styles.header}>
+      <View style={styles.wrapper}>
       <Image source={require('../../assets/logo-png.png')} style={styles.image}></Image>
+    </View>
     </View>
   );
 }
@@ -26,5 +28,15 @@ const styles = StyleSheet.create({
     width: 400,
     height: 100,
     resizeMode: 'contain'
+  },
+
+  wrapper:{
+
+
+    position:'absolute',
+    left:0,
+    top:0,
+    right:0,
+    marginTop:50
   }
 });

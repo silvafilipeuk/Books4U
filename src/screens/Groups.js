@@ -1,4 +1,4 @@
-import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { FlatList, StyleSheet, Text, TouchableOpacity, View,  } from 'react-native';
 import Header from '../components/Header';
 import React from 'react';
 import Footer from '../components/Footer';
@@ -42,6 +42,7 @@ export default function Groups({navigation}){
         onPress={() => {
             navigation.navigate('Group', {id: item.id})
         }}>
+            
             <Text style={styles.groupName}>{item.name}</Text>
             <Text>Genre:</Text>
             <Text>{item.genre}</Text>
@@ -77,7 +78,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: 'white',
-        padding: '5%'
+        padding: '5%',
+        marginTop:60
     },
     box: {
         display: 'flex',
