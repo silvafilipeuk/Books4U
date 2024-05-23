@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, FlatList, FlatListComponent } from 'react-native';
-import { SafeAreaView } from 'react-native';
+import { SafeAreaView, ScrollView } from 'react-native';
 
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -66,6 +66,9 @@ export default function Detail({ navigation, GlobalState }) {
         <View style = {styles.book}>
           <BookCard book = {book} />
         </View>
+        <ScrollView>
+          <Text> {book.description} </Text>
+        </ScrollView>
         <View style = {styles.reviews}>
           <FlatList
             data = {reviews}
