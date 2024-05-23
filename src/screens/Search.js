@@ -25,6 +25,8 @@ export default function Search({ navigation, GlobalState }) {
 		booksLike.length
 			? setSearchQuery(booksLike)
 			: setSearchQuery(booksGenre);
+
+		navigation.navigate("Results");
 	}
 
 	return (
