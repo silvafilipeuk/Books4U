@@ -1,19 +1,17 @@
-import {
-	FlatList,
-	StyleSheet,
-	Text,
-	TouchableOpacity,
-	View,
-} from "react-native";
-import Header from "../components/Header";
-import React, { useState, useEffect } from "react";
-import Footer from "../components/Footer";
-import { supabase } from "../utils/SupabaseClient";
-import CreateGroup from "./CreateGroup";
+import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import Header from '../components/Header';
+import React, { useState, useEffect } from 'react';
+import Footer from '../components/Footer';
+import { supabase } from '../utils/SupabaseClient';
+import Constants from "expo-constants";
+import CreateGroup from './CreateGroup';
 
 export default function Groups({ navigation, GlobalState }) {
-	const [fetchError, setFetchError] = useState(null);
-	const [groups, setGroups] = useState(null);
+	const [user, setUser] = useState(null)
+	const [fetchError, setFetchError] = useState(null)
+	const [groups, setGroups] = useState(null)
+	const [join, setJoin] = useState(false)
+
 
 	useEffect(() => {
 		const fetchGroups = async () => {
@@ -27,11 +25,25 @@ export default function Groups({ navigation, GlobalState }) {
 				setGroups(data);
 				setFetchError(null);
 			}
-		};
 
-		fetchGroups();
-	}, []);
+		}
+		setUser(GlobalState.session.user.identities[0].id)
+		fetchGroups()
+	},[])
 
+	const joinGroup = async (groupId) => {
+		try{
+			const addToGroup = await supabase
+			.from('users_groups')
+			.insert({user_id: user, group_id: groupId})
+		}
+		catch(err){
+			console.log(err)
+		}
+		setJoin(true)
+		
+	}
+	
 	const renderBook = ({ item }) => (
 		<TouchableOpacity
 			style={styles.box}
@@ -45,7 +57,7 @@ export default function Groups({ navigation, GlobalState }) {
 			<Text style={styles.groupName}>{item.group_name}</Text>
 			<Text>About us:</Text>
 			<Text>{item.group_description}</Text>
-			<TouchableOpacity style={styles.button}>
+			<TouchableOpacity style={styles.button} onPress={() => joinGroup(item.group_id)}>
 				<Text>Click to join 📚</Text>
 			</TouchableOpacity>
 		</TouchableOpacity>
@@ -53,7 +65,12 @@ export default function Groups({ navigation, GlobalState }) {
 
 	return (
 		<React.Fragment>
-			<Header GlobalState={GlobalState} />
+			{join ? (<View style={styles.successHeader}>
+				<Text style={styles.success}>Successfully joined group</Text>
+				</View>)
+				: 
+				(<Header GlobalState={GlobalState} />)}
+			
 			<View style={styles.screen}>
 				<FlatList
 					keyExtractor={(item) => item.group_id}
@@ -67,32 +84,48 @@ export default function Groups({ navigation, GlobalState }) {
 	);
 }
 const styles = StyleSheet.create({
-	screen: {
-		flex: 8,
-		alignItems: "center",
-		justifyContent: "center",
-		backgroundColor: "white",
-		padding: "5%",
-		marginTop: 60,
+
+
+    screen: {
+        flex: 8,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: 'white',
+        padding: '5%',
+        marginTop:60
+    },
+	successHeader : {
+		flex: 1,
+    	width: "100%",
+    	alignItems: 'center',
+    	justifyContent: 'center',
+    	backgroundColor: 'white',
+    	paddingTop: Constants.statusBarHeight
 	},
-	box: {
-		display: "flex",
-		alignItems: "center",
-		backgroundColor: "#E2DFD0",
-		width: "100%",
-		marginTop: 0,
-		marginBottom: 10,
-		borderRadius: 5,
-		padding: 5,
-	},
-	button: {
-		marginTop: 10,
-		backgroundColor: "#E6FF94",
-		padding: 10,
-		borderRadius: 5,
-	},
-	groupName: {
+	success: {
 		fontSize: 22,
-		fontWeight: "bold",
+		fontWeight: 'bold'
 	},
-});
+    box: {
+        display: 'flex',
+        alignItems: 'center',
+        backgroundColor: '#E2DFD0',
+        width: '100%',
+        marginTop: 0,
+        marginBottom: 10,
+        borderRadius: 5,
+        padding: 5
+    },
+    button: {
+        marginTop: 10,
+        backgroundColor: '#E6FF94',
+        padding: 10,
+        borderRadius: 5
+    },
+    groupName: {
+        fontSize: 22,
+        fontWeight: 'bold'
+    },
+})
+
+
