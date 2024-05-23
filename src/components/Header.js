@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View, Image, Pressable } from "react-native";
 import Constants from "expo-constants";
 import { supabase } from "../utils/SupabaseClient";
+import React from "react";
 
 
 export default function Header({ GlobalState }) {
@@ -21,20 +22,24 @@ export default function Header({ GlobalState }) {
 				source={require("../../assets/logo-png.png")}
 				style={styles.image}
 			></Image>
+      
 
 
 			{session && session.user ? (
-			
+        <React.Fragment>
 					<Text style={styles.text}>
 						{session.user.user_metadata.full_name} -
 					</Text>
 					<Pressable onPress={handleLogout}>
 						<Text style={styles.textLink}> Logout</Text>
 					</Pressable>
-				</View>
+          </React.Fragment>
+			
+        
 			) : (
 				<Text></Text>
 			)}
+      </View>
 		</View>
 	);
 }
