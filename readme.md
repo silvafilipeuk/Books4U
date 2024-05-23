@@ -28,11 +28,23 @@ created and managed in App.js. It is passed as a prop to all screens which are
 expected to deconstruct it to get access to the individual variables that are
 needed.
 
-* user - the logged in user (uuid?), empty if not logged in
+-   session - the logged in user, empty if not logged in
 
-* books - the array of book objects passed by the Search page to results
+After login will be an object, with the following useful information for us, among others:
 
-* book - the individual selected book passed to Detail page
+```
+{
+access_token: session_token,
+  user: {
+    app_metadata: { aud: "authenticated", id: "a5085d40-0d46-4ebe-b345-f33eceb13d41" }
+    user_metadata: { email: "user@email.com ", full_name: "User Full Name"}
+  }
+}
+```
+
+-   books - the array of book objects passed by the Search page to results
+
+-   book - the individual selected book passed to Detail page
 
 (Please add any others here...)
 
@@ -55,7 +67,7 @@ fetchBooks(title, author) -> [ Book ]
 
 ## Book Object
 
-The Search screen will generate an array of Book objects which will be 
+The Search screen will generate an array of Book objects which will be
 used to update the 'books' state variable in GlobalState.
 
 The Results screen will deconstruct books from GlobalState and use the
@@ -88,6 +100,7 @@ in the frontend code.
 ```
 fetchReviewsByBook(google_id) -> [ Review ]
 ```
+
 ## Review Object
 
 The Supabase Postgres database containing group and review information will
