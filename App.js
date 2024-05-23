@@ -50,9 +50,7 @@ export default function App() {
 		supabase.auth.onAuthStateChange((_event, session) => {
 			setSession(session);
 		});
-
-		console.log(searchQuery, "<< Query");
-	}, [searchQuery]);
+	}, []);
 
 	const GlobalState = {
 		session,
