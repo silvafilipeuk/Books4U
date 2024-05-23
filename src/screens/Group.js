@@ -9,8 +9,8 @@ import {
 import Footer from "../components/Footer";
 
 export default function Group({ navigation, route, GlobalState }) {
-	const id = route.params;
-
+	const {groupName} = route.params;
+	console.log(groupName)
 	const members = [
 		"member 1",
 		"member 2",
@@ -32,13 +32,13 @@ export default function Group({ navigation, route, GlobalState }) {
 	return (
 		<View style={styles.body}>
 			<View style={styles.top}>
-				<Text>Group {id.id}</Text>
+				<Text>{groupName}</Text>
 				<TouchableOpacity>
 					<Text>Leave Group</Text>
 				</TouchableOpacity>
 			</View>
 			<View style={styles.group}>
-				<Text style={styles.groupName}>You joined Group {id.id}</Text>
+				<Text style={styles.groupName}>{groupName}</Text>
 				<Text style={styles.members}>Members</Text>
 				<FlatList
 					data={members}
