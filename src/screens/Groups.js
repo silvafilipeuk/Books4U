@@ -1,5 +1,3 @@
-
-
 import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Header from '../components/Header';
 import React, { useState, useEffect } from 'react';
@@ -14,20 +12,20 @@ export default function Groups({ navigation, GlobalState }) {
 	const [groups, setGroups] = useState(null)
 	const [join, setJoin] = useState(false)
 
-	useEffect(() => {
-		const fetchGroups = async () =>{
-			const { data, error} = await supabase
-			.from('groups')
-			.select()
 
-			if(error){
-				setFetchError("cannot fetch groups")
-				setGroups(null)
+	useEffect(() => {
+		const fetchGroups = async () => {
+			const { data, error } = await supabase.from("groups").select();
+
+			if (error) {
+				setFetchError("cannot fetch groups");
+				setGroups(null);
 			}
-			if(data){
-				setGroups(data)
-				setFetchError(null)
+			if (data) {
+				setGroups(data);
+				setFetchError(null);
 			}
+
 		}
 		setUser(GlobalState.session.user.identities[0].id)
 		fetchGroups()
@@ -50,7 +48,10 @@ export default function Groups({ navigation, GlobalState }) {
 		<TouchableOpacity
 			style={styles.box}
 			onPress={() => {
-				navigation.navigate("Group", { groupName: item.group_name });
+				navigation.navigate("Group", {
+					groupName: item.group_name,
+					groupId: item.group_id,
+				});
 			}}
 		>
 			<Text style={styles.groupName}>{item.group_name}</Text>
@@ -81,9 +82,9 @@ export default function Groups({ navigation, GlobalState }) {
 			<Footer navigation={navigation} GlobalState={GlobalState} />
 		</React.Fragment>
 	);
-
 }
 const styles = StyleSheet.create({
+
 
     screen: {
         flex: 8,
@@ -126,4 +127,5 @@ const styles = StyleSheet.create({
         fontWeight: 'bold'
     },
 })
+
 

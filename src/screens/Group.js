@@ -7,25 +7,46 @@ import {
 	Image,
 } from "react-native";
 import Footer from "../components/Footer";
+import { useEffect, useState } from "react";
+import { supabase } from "../utils/SupabaseClient";
 
 export default function Group({ navigation, route, GlobalState }) {
-	const {groupName} = route.params;
-	console.log(groupName)
-	const members = [
-		"member 1",
-		"member 2",
-		"member 3",
-		"member 4",
-		"member 5",
-	];
+	const { groupName, groupId } = route.params;
+	const [groupMembers, setGroupMembers] = useState([]);
+
+	const [fetchError, setFetchError] = useState(null);
+
+	useEffect(() => {
+		const fetchGroupMembers = async () => {
+			const { data, error } = await supabase
+				.from("profile")
+				.select("full_name,id, users_groups!inner(user_id)")
+				.eq("users_groups.group_id", groupId);
+
+			if (error) {
+				setFetchError("Cannot fetch group members.");
+				setGroupMembers(null);
+			}
+			if (data) {
+				setGroupMembers(data);
+				setFetchError(null);
+			}
+		};
+
+		fetchGroupMembers();
+	}, []);
+
+	const members = groupMembers.map((member) => {
+		return { name: member.full_name, id: member.id };
+	});
 
 	const renderedMembers = ({ item }) => (
 		<TouchableOpacity
 			onPress={() => {
-				navigation.navigate("Member", { name: item });
+				navigation.navigate("Member", { name: item.name, id: item.id });
 			}}
 		>
-			<Text>{item}</Text>
+			<Text>{item.name}</Text>
 		</TouchableOpacity>
 	);
 
@@ -46,7 +67,9 @@ export default function Group({ navigation, route, GlobalState }) {
 					keyExtractor={(item, index) => index.toString()}
 					style={styles.memberList}
 				/>
-				<Text style={styles.recommendations}>Top recommendations</Text>
+				<Text style={styles.recommendations}>
+					Users recommendations:
+				</Text>
 				<View style={styles.container}>
 					<Image
 						source={require("../../assets/gatsby.jpg")}
