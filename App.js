@@ -60,6 +60,7 @@ export default function App() {
 		books,
 		setBooks,
 		setSearchQuery,
+		searchQuery,
 	};
 
 	// Navigation.
