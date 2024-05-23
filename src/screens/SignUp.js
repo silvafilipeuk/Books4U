@@ -7,6 +7,9 @@ import {
 	ScrollView,
 	TouchableOpacity,
 	Alert,
+	KeyboardAvoidingView,
+	TouchableWithoutFeedback,
+	Keyboard
 } from "react-native";
 import { supabase } from "../utils/SupabaseClient";
 import Header from "../components/Header";
@@ -119,6 +122,10 @@ export default function SignUp({ navigation, GlobalState }) {
 		);
 	} else {
 		return (
+			<KeyboardAvoidingView
+      behavior='height'keyboardVerticalOffset={-170}
+      style={styles.container}>
+		<TouchableWithoutFeedback onPress={Keyboard.dismiss}>
 			<View style={styles.screen}>
 				<Header GlobalState={GlobalState} />
 				<ScrollView>
@@ -184,6 +191,8 @@ export default function SignUp({ navigation, GlobalState }) {
 
 				<Footer navigation={navigation} GlobalState={GlobalState} />
 			</View>
+			</TouchableWithoutFeedback>
+			</KeyboardAvoidingView>
 		);
 	}
 }
@@ -199,7 +208,11 @@ const styles = StyleSheet.create({
 		backgroundColor: "#fff",
 		alignItems: "center",
 		justifyContent: "center",
-		marginTop: 0,
+		marginTop: 40,
+	},
+	container:{
+
+		flex:1
 	},
 	headerText: {
 		fontSize: 32,

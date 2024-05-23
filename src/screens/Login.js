@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, Text, View, TextInput, Pressable } from "react-native";
+
+import { StyleSheet, Text, View, TextInput, Pressable, KeyboardAvoidingView, Platform, TouchableWithoutFeedback, Keyboard } from "react-native";
+
+
+
 import { supabase, getUser } from "../utils/SupabaseClient";
-// import Header from "../components/Header";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { Alert } from "react-native";
@@ -57,8 +60,15 @@ export default function Login({ navigation, GlobalState }) {
 		return <Search navigation={navigation} GlobalState={GlobalState} />;
 	} else {
 		return (
+			<KeyboardAvoidingView
+      behavior='height'keyboardVerticalOffset={-130}
+      style={styles.container}>
+		<TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+			
 			<View style={styles.screen}>
+
 				<Header GlobalState={GlobalState} />
+
 				<View style={styles.body}>
 					<Text style={styles.headerText}>Login</Text>
 					<Text style={styles.subHeaderText}>
@@ -107,6 +117,9 @@ export default function Login({ navigation, GlobalState }) {
 				</View>
 				<Footer navigation={navigation} GlobalState={GlobalState} />
 			</View>
+			</TouchableWithoutFeedback>
+			</KeyboardAvoidingView>
+		
 		);
 	}
 }
@@ -118,6 +131,12 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 		justifyContent: "center",
 	},
+
+	container:{
+		flex:1
+	},
+
+	
 	body: {
 		backgroundColor: "#fff",
 		alignItems: "center",
@@ -156,7 +175,10 @@ const styles = StyleSheet.create({
 	wrapper: {
 		marginTop: 20,
 	},
-	bold: {
-		fontWeight: "bold",
-	},
+
+bold:{
+    fontWeight:'bold'
+  }
 });
+
+

@@ -100,6 +100,7 @@ export default function App() {
 					)}
 				</Stack.Screen>
 
+				
 				<Stack.Screen
 					name="BookReview"
 					options={{ headerShown: false }}
@@ -108,6 +109,7 @@ export default function App() {
 						<BookReview {...props} GlobalState={GlobalState} />
 					)}
 				</Stack.Screen>
+
 				<Stack.Screen name="Member">
 					{(props) => <Member {...props} GlobalState={GlobalState} />}
 				</Stack.Screen>
@@ -123,5 +125,6 @@ export default function App() {
 				</Stack.Screen>
 			</Stack.Navigator>
 		</NavigationContainer>
-	);
-}
+	
+	)
+	}

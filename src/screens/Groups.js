@@ -1,10 +1,10 @@
 
+
 import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Header from '../components/Header';
 import React from 'react';
 import Footer from '../components/Footer';
 import CreateGroup from './CreateGroup';
-
 
 export default function Groups({ navigation, GlobalState }) {
 	const groups = [
@@ -75,31 +75,34 @@ export default function Groups({ navigation, GlobalState }) {
 
 }
 const styles = StyleSheet.create({
-	screen: {
-		flex: 8,
-		alignItems: "center",
-		justifyContent: "center",
-		backgroundColor: "white",
-		padding: "5%",
-	},
-	box: {
-		display: "flex",
-		alignItems: "center",
-		backgroundColor: "#E2DFD0",
-		width: "100%",
-		marginTop: 0,
-		marginBottom: 10,
-		borderRadius: 5,
-		padding: 5,
-	},
-	button: {
-		marginTop: 10,
-		backgroundColor: "#E6FF94",
-		padding: 10,
-		borderRadius: 5,
-	},
-	groupName: {
-		fontSize: 22,
-		fontWeight: "bold",
-	},
-});
+
+    screen: {
+        flex: 8,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: 'white',
+        padding: '5%',
+        marginTop:60
+    },
+    box: {
+        display: 'flex',
+        alignItems: 'center',
+        backgroundColor: '#E2DFD0',
+        width: '100%',
+        marginTop: 0,
+        marginBottom: 10,
+        borderRadius: 5,
+        padding: 5
+    },
+    button: {
+        marginTop: 10,
+        backgroundColor: '#E6FF94',
+        padding: 10,
+        borderRadius: 5
+    },
+    groupName: {
+        fontSize: 22,
+        fontWeight: 'bold'
+    },
+})
+
