@@ -46,6 +46,8 @@ access_token: session_token,
 
 -   book - the individual selected book passed to Detail page
 
+-   searchQuery - Will receive the query string from the search base, to be used by results.js to produce the results.
+
 (Please add any others here...)
 
 ## Navigation

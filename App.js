@@ -38,6 +38,7 @@ export default function App() {
 	});
 
 	const [session, setSession] = useState(Session || null);
+	const [searchQuery, setSearchQuery] = useState("");
 	const [book, setBook] = useState(null);
 	const [books, setBooks] = useState([]);
 
@@ -49,7 +50,9 @@ export default function App() {
 		supabase.auth.onAuthStateChange((_event, session) => {
 			setSession(session);
 		});
-	}, []);
+
+		console.log(searchQuery, "<< Query");
+	}, [searchQuery]);
 
 	const GlobalState = {
 		session,
@@ -58,6 +61,7 @@ export default function App() {
 		setBook,
 		books,
 		setBooks,
+		setSearchQuery,
 	};
 
 	// Navigation.
@@ -100,7 +104,6 @@ export default function App() {
 					)}
 				</Stack.Screen>
 
-				
 				<Stack.Screen
 					name="BookReview"
 					options={{ headerShown: false }}
@@ -123,6 +126,5 @@ export default function App() {
 				</Stack.Screen>
 			</Stack.Navigator>
 		</NavigationContainer>
-	
-	)
-	}
+	);
+}

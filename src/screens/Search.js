@@ -14,13 +14,17 @@ import Footer from "../components/Footer";
 export default function Search({ navigation, GlobalState }) {
 	const [booksLike, setBooksLike] = useState("");
 	const [booksGenre, setBooksGenre] = useState("");
+	const { setSearchQuery } = GlobalState;
 
 	async function handleSubmit(e) {
 		e.preventDefault();
 
-		// We need to call results.js here...
 		// Only one State will have value, so we can decide which
 		// search we will do based on booksLike or booksGenre content.
+
+		booksLike.length
+			? setSearchQuery(booksLike)
+			: setSearchQuery(booksGenre);
 	}
 
 	return (
