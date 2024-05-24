@@ -9,10 +9,7 @@ import {
 } from "react-native";
 import Footer from "../components/Footer";
 import { useEffect, useState } from "react";
-import {
-	fetchGroupMembers,
-	fetchGroupRecommendations,
-} from "../utils/database";
+import { fetchGroupMembers, fetchUserRecommendations } from "../utils/database";
 
 export default function Group({ navigation, route, GlobalState }) {
 	const { groupName, groupId } = route.params;
@@ -27,7 +24,7 @@ export default function Group({ navigation, route, GlobalState }) {
 				setGroupMembers(members);
 
 				Promise.all(
-					members.map((user) => fetchGroupRecommendations(user.id))
+					members.map((user) => fetchUserRecommendations(user.id))
 				)
 					.then((recommendations) => {
 						setGroupRecommendations(recommendations);
@@ -44,7 +41,18 @@ export default function Group({ navigation, route, GlobalState }) {
 			});
 	}, []);
 
-	console.log(groupRecommendations[2]);
+	let recommendations = groupRecommendations
+		.filter((elem) => elem.length)
+		.map((userRecommentations) => {
+			return userRecommentations.map(
+				(recommendation) => recommendation.book_cover_url
+			);
+		});
+
+	recommendations = recommendations.flat();
+	recommendations = recommendations.filter((url, index) => {
+		return recommendations.indexOf(url) === index;
+	});
 
 	const renderedMembers = ({ item }) => (
 		<TouchableOpacity
@@ -77,22 +85,13 @@ export default function Group({ navigation, route, GlobalState }) {
 					Users recommendations:
 				</Text>
 				<View style={styles.container}>
-					<Image
-						source={require("../../assets/gatsby.jpg")}
-						style={styles.Image}
-					/>
-					<Image
-						source={require("../../assets/Harry_Potter.jpg")}
-						style={styles.Image}
-					/>
-					<Image
-						source={require("../../assets/Million.webp")}
-						style={styles.Image}
-					/>
-					<Image
-						source={require("../../assets/Million.webp")}
-						style={styles.Image}
-					/>
+					{recommendations.map((url, index) => (
+						<Image
+							key={index}
+							source={{ uri: url }}
+							style={styles.Image}
+						/>
+					))}
 				</View>
 			</View>
 			<Footer />
