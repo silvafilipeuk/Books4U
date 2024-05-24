@@ -15,10 +15,14 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
 	},
 });
 
-export async function getUser() {
-	const {
-		data: { user },
-	} = await supabase.auth.getUser();
+// Asks the supabase server if the user is logged in.
+// Returns false if the user is not logged, or user session iformation in an object otherwise.
+export async function getSession() {
+	const { data, error } = await supabase.auth.getSession();
 
-	return user;
+	if (error) {
+		Promise.reject(error);
+	}
+
+	return data.session === null ? false : data.session.user;
 }
