@@ -21,6 +21,15 @@ export const fetchGroupMembers = async (groupId) => {
 	}
 };
 
+// Takes an user ID as parameter and returns an array of recommendations objects for that user.
+// Returns: [{
+// 	id: "recommendation_id",
+// 	book_cover_url: "url of the book",
+// 	book_id: "book_id",
+// 	book_title: "title of the book",
+//  	recommendation_text: "text of the recommendation"
+// }, {...}, {...} ]
+
 export const fetchGroupRecommendations = async (userId) => {
 	const { data, error } = await supabase
 		.rpc("booksrecommendations")
