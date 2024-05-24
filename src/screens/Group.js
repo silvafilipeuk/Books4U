@@ -5,40 +5,46 @@ import {
 	Text,
 	FlatList,
 	Image,
+	Alert,
 } from "react-native";
 import Footer from "../components/Footer";
 import { useEffect, useState } from "react";
-import { supabase } from "../utils/SupabaseClient";
+import {
+	fetchGroupMembers,
+	fetchGroupRecommendations,
+} from "../utils/database";
 
 export default function Group({ navigation, route, GlobalState }) {
 	const { groupName, groupId } = route.params;
 	const [groupMembers, setGroupMembers] = useState([]);
+	const [groupRecommendations, setGroupRecommendations] = useState([]);
 
 	const [fetchError, setFetchError] = useState(null);
 
 	useEffect(() => {
-		const fetchGroupMembers = async () => {
-			const { data, error } = await supabase
-				.from("profile")
-				.select("full_name,id, users_groups!inner(user_id)")
-				.eq("users_groups.group_id", groupId);
+		fetchGroupMembers(groupId)
+			.then((members) => {
+				setGroupMembers(members);
 
-			if (error) {
-				setFetchError("Cannot fetch group members.");
-				setGroupMembers(null);
-			}
-			if (data) {
-				setGroupMembers(data);
-				setFetchError(null);
-			}
-		};
-
-		fetchGroupMembers();
+				Promise.all(
+					members.map((user) => fetchGroupRecommendations(user.id))
+				)
+					.then((recommendations) => {
+						setGroupRecommendations(recommendations);
+						setFetchError(null);
+					})
+					.catch((error) => {
+						setFetchError("Error fetching group data: ");
+						Alert.alert(fetchError + error);
+					});
+			})
+			.catch((error) => {
+				setFetchError("Error fetching group members: ");
+				Alert.alert(fetchError + error);
+			});
 	}, []);
 
-	const members = groupMembers.map((member) => {
-		return { name: member.full_name, id: member.id };
-	});
+	console.log(groupRecommendations[2]);
 
 	const renderedMembers = ({ item }) => (
 		<TouchableOpacity
@@ -62,7 +68,7 @@ export default function Group({ navigation, route, GlobalState }) {
 				<Text style={styles.groupName}>{groupName}</Text>
 				<Text style={styles.members}>Members</Text>
 				<FlatList
-					data={members}
+					data={groupMembers}
 					renderItem={renderedMembers}
 					keyExtractor={(item, index) => index.toString()}
 					style={styles.memberList}

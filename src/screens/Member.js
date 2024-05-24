@@ -7,6 +7,7 @@ import {
 	Image,
 } from "react-native";
 import Footer from "../components/Footer";
+import { fetchGroupRecommendations } from "../utils/database";
 export default function Member({ navigation, route }) {
 	const { name, id } = route.params;
 	const reviews = [
