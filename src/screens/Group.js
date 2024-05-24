@@ -9,7 +9,11 @@ import {
 } from "react-native";
 import Footer from "../components/Footer";
 import { useEffect, useState } from "react";
-import { fetchGroupMembers, fetchUserRecommendations } from "../utils/database";
+import {
+	fetchGroupMembers,
+	fetchUserRecommendations,
+	isUserOnGroup,
+} from "../utils/database";
 
 export default function Group({ navigation, route, GlobalState }) {
 	const { groupName, groupId } = route.params;
@@ -41,7 +45,6 @@ export default function Group({ navigation, route, GlobalState }) {
 			});
 	}, []);
 
-
 	let recommendations = groupRecommendations
 		.filter((elem) => elem.length)
 		.map((userRecommentations) => {
@@ -54,7 +57,6 @@ export default function Group({ navigation, route, GlobalState }) {
 	recommendations = recommendations.filter((url, index) => {
 		return recommendations.indexOf(url) === index;
 	});
-
 
 	const renderedMembers = ({ item }) => (
 		<TouchableOpacity

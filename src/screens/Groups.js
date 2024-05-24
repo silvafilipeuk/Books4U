@@ -8,38 +8,32 @@ import {
 import Header from "../components/Header";
 import React, { useState, useEffect } from "react";
 import Footer from "../components/Footer";
-import { supabase, getSession } from "../utils/SupabaseClient";
+import { supabase } from "../utils/SupabaseClient";
 import Constants from "expo-constants";
 import CreateGroup from "./CreateGroup";
+import { isUserOnGroup, fetchGroups } from "../utils/database";
 
 export default function Groups({ navigation, GlobalState }) {
-	const [user, setUser] = useState(null);
+	const { session } = GlobalState;
 	const [fetchError, setFetchError] = useState(null);
 	const [groups, setGroups] = useState(null);
 	const [join, setJoin] = useState(false);
 
 	useEffect(() => {
-		const fetchGroups = async () => {
-			const { data, error } = await supabase.from("groups").select();
-
-			if (error) {
-				setFetchError("cannot fetch groups");
-				setGroups(null);
-			}
-			if (data) {
-				setGroups(data);
-				setFetchError(null);
-			}
-		};
-		setUser(getSession());
-		fetchGroups();
+		fetchGroups()
+			.then((groups) => {
+				setGroups(groups);
+			})
+			.catch((error) => {
+				setFetchError(error);
+			});
 	}, []);
 
 	const joinGroup = async (groupId) => {
 		try {
 			const addToGroup = await supabase
 				.from("users_groups")
-				.insert({ user_id: user, group_id: groupId });
+				.insert({ user_id: session.sub, group_id: groupId });
 		} catch (err) {
 			console.log(err);
 		}

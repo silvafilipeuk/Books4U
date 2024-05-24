@@ -52,3 +52,29 @@ export const fetchUserRecommendations = async (userId) => {
 		return recommendations;
 	}
 };
+
+export const fetchGroups = async () => {
+	const { data, error } = await supabase.from("groups").select();
+
+	if (error) {
+		Promise.reject(error);
+	}
+
+	return data;
+};
+
+// checks if an user belongs to a group.
+// Returns true or false
+
+export const isUserOnGroup = async (userId, groupId) => {
+	const { data, error } = await supabase
+		.from("users_groups")
+		.select("user_id")
+		.eq("user_id", userId)
+		.eq("group_id", groupId);
+
+	if (error) {
+		Promise.reject(error);
+	}
+	return data.length ? true : false;
+};
