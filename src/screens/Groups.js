@@ -8,25 +8,29 @@ import {
 import Header from "../components/Header";
 import React, { useState, useEffect } from "react";
 import Footer from "../components/Footer";
-import { supabase, getSession } from "../utils/SupabaseClient";
+import { supabase } from "../utils/SupabaseClient";
 import Constants from "expo-constants";
 import CreateGroup from "./CreateGroup";
+
 import { fetchGroups, fetchUsersGroupsData } from "../utils/database";
 
+
 export default function Groups({ navigation, GlobalState }) {
-	const [user, setUser] = useState(null);
+	const { session } = GlobalState;
 	const [fetchError, setFetchError] = useState(null);
 	const [groups, setGroups] = useState([]);
 	const [join, setJoin] = useState(null);
 	const [usersGroupsData, setUsersGroupsData] = useState([])
 
 	useEffect(() => {
+
 		const fetchAllData = async () => {
 			const fetchedUsersGroupData = await fetchUsersGroupsData(setUsersGroupsData);
 			const fetchedGroups = await fetchGroups(setFetchError, setGroups);
 		}
 		setUser(getSession());
 		fetchAllData();
+
 	}, []);
 
 	const joinGroup = async(groupId) => {
@@ -39,6 +43,7 @@ export default function Groups({ navigation, GlobalState }) {
 		try {
 			const { error } = await supabase
 				.from("users_groups")
+
 				.insert({ user_id: user._j.id, group_id: groupId });
 	
 			if (error) {

@@ -14,12 +14,13 @@ import Results from "./src/screens/Results";
 import Detail from "./src/screens/Detail";
 import Member from "./src/screens/Member";
 
-import { supabase } from "./src/utils/SupabaseClient";
+import { supabase, getSession } from "./src/utils/SupabaseClient";
 import { Session } from "@supabase/supabase-js";
 
 import { AppState } from "react-native";
 
 import BookReview from "./src/screens/BookReview";
+import { get } from "react-native/Libraries/TurboModule/TurboModuleRegistry";
 
 const Stack = createNativeStackNavigator();
 
@@ -43,12 +44,14 @@ export default function App() {
 	const [books, setBooks] = useState([]);
 
 	useEffect(() => {
-		supabase.auth.getSession().then(({ data: { session } }) => {
+		getSession().then((session) => {
 			setSession(session);
 		});
 
-		supabase.auth.onAuthStateChange((_event, session) => {
-			setSession(session);
+		supabase.auth.onAuthStateChange((_event) => {
+			getSession().then((session) => {
+				setSession(session);
+			});
 		});
 	}, []);
 

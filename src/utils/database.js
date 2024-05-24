@@ -53,6 +53,21 @@ export const fetchUserRecommendations = async (userId) => {
 	}
 };
 
+
+
+export const isUserOnGroup = async (userId, groupId) => {
+	const { data, error } = await supabase
+		.from("users_groups")
+		.select("user_id")
+		.eq("user_id", userId)
+		.eq("group_id", groupId);
+
+	if (error) {
+		Promise.reject(error);
+	}
+	return data.length ? true : false;
+};
+
 // Fetches all the groups and their data from the database
 //group_id, group_name, group_description
 
@@ -82,3 +97,4 @@ export const fetchUsersGroupsData = async (setUsersGroupsData) => {
 		setUsersGroupsData(data)
 	}
 }
+
