@@ -11,33 +11,49 @@ import Footer from "../components/Footer";
 import { supabase } from "../utils/SupabaseClient";
 import Constants from "expo-constants";
 import CreateGroup from "./CreateGroup";
-import { isUserOnGroup, fetchGroups } from "../utils/database";
+
+import { fetchGroups, fetchUsersGroupsData } from "../utils/database";
+
 
 export default function Groups({ navigation, GlobalState }) {
 	const { session } = GlobalState;
 	const [fetchError, setFetchError] = useState(null);
-	const [groups, setGroups] = useState(null);
-	const [join, setJoin] = useState(false);
+	const [groups, setGroups] = useState([]);
+	const [join, setJoin] = useState(null);
+	const [usersGroupsData, setUsersGroupsData] = useState([])
 
 	useEffect(() => {
-		fetchGroups()
-			.then((groups) => {
-				setGroups(groups);
-			})
-			.catch((error) => {
-				setFetchError(error);
-			});
+
+		const fetchAllData = async () => {
+			const fetchedUsersGroupData = await fetchUsersGroupsData(setUsersGroupsData);
+			const fetchedGroups = await fetchGroups(setFetchError, setGroups);
+		}
+		setUser(getSession());
+		fetchAllData();
+
 	}, []);
 
-	const joinGroup = async (groupId) => {
+	const joinGroup = async(groupId) => {
+		const userAlreadyInGroup = usersGroupsData.some(userData => userData.user_id === user._j.id && userData.group_id === groupId);
+
+		if(userAlreadyInGroup){
+			setJoin("You have already joined the group");
+        	return;
+    	}
 		try {
-			const addToGroup = await supabase
+			const { error } = await supabase
 				.from("users_groups")
-				.insert({ user_id: session.sub, group_id: groupId });
-		} catch (err) {
-			console.log(err);
+
+				.insert({ user_id: user._j.id, group_id: groupId });
+	
+			if (error) {
+				setJoin(`Failed to join group: ${error.message}`);
+			} else {
+				setJoin('Successfully joined group');
+			}
+		} catch (error) {
+			setJoin(`Failed to join group: ${error.message}`);
 		}
-		setJoin(true);
 	};
 
 	const renderBook = ({ item }) => (
@@ -63,11 +79,11 @@ export default function Groups({ navigation, GlobalState }) {
 	);
 
 	return (
-		<View style={styles.body}>
-			{join ? (
+		<React.Fragment>
+			{join !== null ? (
 				<View style={styles.successHeader}>
 					<Text style={styles.success}>
-						Successfully joined group.
+						{join}
 					</Text>
 				</View>
 			) : (
@@ -84,7 +100,7 @@ export default function Groups({ navigation, GlobalState }) {
 			</View>
 
 			<Footer navigation={navigation} GlobalState={GlobalState} />
-		</View>
+		</React.Fragment>
 	);
 }
 const styles = StyleSheet.create({

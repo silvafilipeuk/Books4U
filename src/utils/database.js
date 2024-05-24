@@ -53,18 +53,7 @@ export const fetchUserRecommendations = async (userId) => {
 	}
 };
 
-export const fetchGroups = async () => {
-	const { data, error } = await supabase.from("groups").select();
 
-	if (error) {
-		Promise.reject(error);
-	}
-
-	return data;
-};
-
-// checks if an user belongs to a group.
-// Returns true or false
 
 export const isUserOnGroup = async (userId, groupId) => {
 	const { data, error } = await supabase
@@ -78,3 +67,34 @@ export const isUserOnGroup = async (userId, groupId) => {
 	}
 	return data.length ? true : false;
 };
+
+// Fetches all the groups and their data from the database
+//group_id, group_name, group_description
+
+export const fetchGroups = async (setFetchError, setGroups) => {
+	const { data, error } = await supabase.from("groups").select();
+
+	if (error) {
+		setFetchError("cannot fetch groups");
+		setGroups(null);
+	}
+	if (data) {
+		setGroups(data);
+		setFetchError(null);
+	}
+};
+
+//Fetch all the users_groups data
+// user_id, group_id, id
+
+export const fetchUsersGroupsData = async (setUsersGroupsData) => {
+	const { data, error } = await supabase.from("users_groups").select("*")
+
+	if(error){
+		return Promise.reject(error)
+	}
+	if(data){
+		setUsersGroupsData(data)
+	}
+}
+
