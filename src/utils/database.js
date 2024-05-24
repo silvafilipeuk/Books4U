@@ -30,7 +30,7 @@ export const fetchGroupMembers = async (groupId) => {
 //  	recommendation_text: "text of the recommendation"
 // }, {...}, {...} ]
 
-export const fetchGroupRecommendations = async (userId) => {
+export const fetchUserRecommendations = async (userId) => {
 	const { data, error } = await supabase
 		.rpc("booksrecommendations")
 		.eq("user_id", userId);
