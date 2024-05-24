@@ -41,6 +41,7 @@ export default function Group({ navigation, route, GlobalState }) {
 			});
 	}, []);
 
+
 	let recommendations = groupRecommendations
 		.filter((elem) => elem.length)
 		.map((userRecommentations) => {
@@ -53,6 +54,7 @@ export default function Group({ navigation, route, GlobalState }) {
 	recommendations = recommendations.filter((url, index) => {
 		return recommendations.indexOf(url) === index;
 	});
+
 
 	const renderedMembers = ({ item }) => (
 		<TouchableOpacity
@@ -94,7 +96,7 @@ export default function Group({ navigation, route, GlobalState }) {
 					))}
 				</View>
 			</View>
-			<Footer />
+			<Footer navigation={navigation} GlobalState={GlobalState} />
 		</View>
 	);
 }

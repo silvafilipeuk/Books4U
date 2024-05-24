@@ -93,8 +93,9 @@ export default function Groups({ navigation, GlobalState }) {
 					showsVerticalScrollIndicator={false}
 				/>
 			</View>
+
 			<Footer navigation={navigation} GlobalState={GlobalState} />
-		</React.Fragment>
+		</View>
 	);
 }
 const styles = StyleSheet.create({
@@ -105,6 +106,22 @@ const styles = StyleSheet.create({
 		backgroundColor: "white",
 		padding: "5%",
 		marginTop: 60,
+	},
+	wrapper: {
+		display: "flex",
+		alignItems: "center",
+		alignContent: "center",
+		flexDirection: "column",
+		position: "absolute",
+		left: 0,
+		top: 0,
+		right: 0,
+		paddingTop: Constants.statusBarHeight,
+	},
+	body: {
+		flex: 1,
+		padding: "5%",
+		backgroundColor: "white",
 	},
 	successHeader: {
 		flex: 1,
