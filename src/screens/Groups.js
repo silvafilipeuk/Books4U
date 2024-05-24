@@ -14,42 +14,45 @@ import CreateGroup from "./CreateGroup";
 
 import { fetchGroups, fetchUsersGroupsData } from "../utils/database";
 
-
 export default function Groups({ navigation, GlobalState }) {
 	const { session } = GlobalState;
 	const [fetchError, setFetchError] = useState(null);
 	const [groups, setGroups] = useState([]);
 	const [join, setJoin] = useState(null);
-	const [usersGroupsData, setUsersGroupsData] = useState([])
+	const [usersGroupsData, setUsersGroupsData] = useState([]);
 
 	useEffect(() => {
-
 		const fetchAllData = async () => {
-			const fetchedUsersGroupData = await fetchUsersGroupsData(setUsersGroupsData);
+			const fetchedUsersGroupData = await fetchUsersGroupsData(
+				setUsersGroupsData
+			);
 			const fetchedGroups = await fetchGroups(setFetchError, setGroups);
-		}
-		setUser(getSession());
-		fetchAllData();
+		};
 
+		fetchAllData();
 	}, []);
 
-	const joinGroup = async(groupId) => {
-		const userAlreadyInGroup = usersGroupsData.some(userData => userData.user_id === user._j.id && userData.group_id === groupId);
+	const joinGroup = async (groupId) => {
+		const userAlreadyInGroup = usersGroupsData.some(
+			(userData) =>
+				userData.user_id === session.sub &&
+				userData.group_id === groupId
+		);
 
-		if(userAlreadyInGroup){
+		if (userAlreadyInGroup) {
 			setJoin("You have already joined the group");
-        	return;
-    	}
+			return;
+		}
 		try {
 			const { error } = await supabase
 				.from("users_groups")
 
-				.insert({ user_id: user._j.id, group_id: groupId });
-	
+				.insert({ user_id: session.sub, group_id: groupId });
+
 			if (error) {
 				setJoin(`Failed to join group: ${error.message}`);
 			} else {
-				setJoin('Successfully joined group');
+				setJoin("Successfully joined group");
 			}
 		} catch (error) {
 			setJoin(`Failed to join group: ${error.message}`);
@@ -79,12 +82,10 @@ export default function Groups({ navigation, GlobalState }) {
 	);
 
 	return (
-		<React.Fragment>
+		<View style={styles.body}>
 			{join !== null ? (
 				<View style={styles.successHeader}>
-					<Text style={styles.success}>
-						{join}
-					</Text>
+					<Text style={styles.success}>{join}</Text>
 				</View>
 			) : (
 				<Header GlobalState={GlobalState} />
@@ -100,7 +101,7 @@ export default function Groups({ navigation, GlobalState }) {
 			</View>
 
 			<Footer navigation={navigation} GlobalState={GlobalState} />
-		</React.Fragment>
+		</View>
 	);
 }
 const styles = StyleSheet.create({
