@@ -95,7 +95,7 @@ export default function Groups({ navigation, GlobalState }) {
 			</View>
 
 			<Footer navigation={navigation} GlobalState={GlobalState} />
-		</View>
+		</React.Fragment>
 	);
 }
 const styles = StyleSheet.create({
