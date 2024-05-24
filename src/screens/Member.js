@@ -8,39 +8,48 @@ import {
 } from "react-native";
 import Footer from "../components/Footer";
 import { fetchGroupRecommendations } from "../utils/database";
-export default function Member({ navigation, route }) {
-	const { name, id } = route.params;
-	const reviews = [
-		{
-			review: "blah blah blah blah",
-		},
-		{
-			review: "blah blah blah blah",
-		},
-		{
-			review: "blah blah blah blah",
-		},
-	];
+import { supabase } from "../utils/SupabaseClient";
+import { useEffect, useState } from "react";
 
-	const renderReviews = ({ item }) => (
-		<View style={styles.review}>
-			<Image
-				source={require(`../../assets/gatsby.jpg`)}
-				style={styles.Image}
-			/>
-			<Text>{item.review}</Text>
-		</View>
-	);
+export default function Member({ navigation, route, GlobalState }) {
+	const { name, id } = route.params;
+
+	const [bookData, setBookData]=useState([]);
+	
+	useEffect(() => {
+		fetchGroupRecommendations(id)
+			.then((reviews) => {
+				setBookData(reviews);
+			
+			})
+
+	}, []);
+
+	
+
 	return (
 		<View style={styles.member}>
 			<Text style={styles.name}>{name}</Text>
 			<FlatList
-				data={reviews}
-				renderItem={renderReviews}
-				keyExtractor={(item, index) => index.toString()}
-				style={styles.list}
+			style={styles.list}
+			data={bookData}
+			renderItem={({item})=>(
+				<View style={styles.review}>
+				<Image source={{ uri: item.book_cover_url }}
+				style={styles.Image}>
+
+				</Image>
+				<View style={styles.wrap}>
+				<Text style={styles.title}>{item.book_title}</Text>
+				<Text style={styles.txt}>"{item.recommendation_text}"</Text>
+				</View>
+				
+				</View>
+
+			)}
 			/>
-			<Footer />
+			
+			<Footer navigation={navigation} GlobalState={GlobalState} />
 		</View>
 	);
 }
@@ -51,27 +60,56 @@ const styles = StyleSheet.create({
 		backgroundColor: "white",
 		alignItems: "center",
 		padding: 10,
+		display:'flex',
+		flexWrap:'wrap',
+		boxSizing:'border-box'
 	},
 	name: {
 		fontSize: 22,
 		fontWeight: "bold",
 		padding: 10,
 	},
+	wrap:{
+		marginLeft:50
+
+	},
+	title:{
+		padding:0,
+		marginTop:50,
+		textAlign:'center',
+		fontSize:24
+	},
+
+	txt:{
+
+		color:'black',
+		fontSize:17,
+		fontWeight:'bold',
+		marginTop:20,
+		position:'fixed'
+		
+		
+	},
 	list: {
 		width: "100%",
-		height: "75%",
+		height: "70%",
 		backgroundColor: "white",
 	},
 	review: {
+		
 		width: "100%",
 		flexDirection: "row",
 		justifyContent: "space-around",
-		backgroundColor: "#E2DFD0",
+		backgroundColor: "#fcf7ca",
 		marginBottom: 10,
 		padding: "5%",
+		
+		
 	},
 	Image: {
-		width: "40%",
-		height: 200,
+		width: '30%',
+		height: 210,
+		resizeMode: 'contain',
+		
 	},
 });

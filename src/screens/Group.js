@@ -44,7 +44,7 @@ export default function Group({ navigation, route, GlobalState }) {
 			});
 	}, []);
 
-	console.log(groupRecommendations[2]);
+
 
 	const renderedMembers = ({ item }) => (
 		<TouchableOpacity
@@ -95,7 +95,7 @@ export default function Group({ navigation, route, GlobalState }) {
 					/>
 				</View>
 			</View>
-			<Footer />
+			<Footer navigation={navigation} GlobalState={GlobalState} />
 		</View>
 	);
 }
