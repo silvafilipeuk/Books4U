@@ -7,7 +7,7 @@ import {
 	Image,
 } from "react-native";
 import Footer from "../components/Footer";
-import { fetchGroupRecommendations } from "../utils/database";
+import { fetchUserRecommendations } from "../utils/database";
 import { supabase } from "../utils/SupabaseClient";
 import { useEffect, useState } from "react";
 
@@ -17,7 +17,7 @@ export default function Member({ navigation, route, GlobalState }) {
 	const [bookData, setBookData]=useState([]);
 	
 	useEffect(() => {
-		fetchGroupRecommendations(id)
+		fetchUserRecommendations(id)
 			.then((reviews) => {
 				setBookData(reviews);
 			
