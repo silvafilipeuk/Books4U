@@ -23,10 +23,8 @@ export default function Groups({ navigation, GlobalState }) {
 
 	useEffect(() => {
 		const fetchAllData = async () => {
-			const fetchedUsersGroupData = await fetchUsersGroupsData(
-				setUsersGroupsData
-			);
-			const fetchedGroups = await fetchGroups(setFetchError, setGroups);
+			await fetchUsersGroupsData(setUsersGroupsData);
+			await fetchGroups(setFetchError, setGroups);
 		};
 
 		fetchAllData();
