@@ -30,9 +30,11 @@ export default function Group({ navigation, route, GlobalState }) {
 		fetchGroupMembers(groupId)
 			.then((members) => {
 				setGroupMembers(members);
-				isUserOnGroup(session.sub, groupId).then((membership) => {
-					setIsMember(membership);
-				});
+				if (session) {
+					isUserOnGroup(session.sub, groupId).then((membership) => {
+						setIsMember(membership);
+					});
+				}
 
 				Promise.all(
 					members.map((user) => fetchUserRecommendations(user.id))
@@ -121,12 +123,21 @@ export default function Group({ navigation, route, GlobalState }) {
 	return (
 		<View style={styles.body}>
 			<View style={styles.top}>
-				<Text style={styles.headerText}>User: {session.full_name}</Text>
+				{session ? (
+					<Text style={styles.headerText}>
+						User: {session.full_name}
+					</Text>
+				) : (
+					<Text style={styles.headerText}>{groupName}</Text>
+				)}
+
 				<TouchableOpacity onPress={handleJoinLeave}>
 					{isMember ? (
 						<Text style={styles.headerText}>Leave Group</Text>
-					) : (
+					) : session ? (
 						<Text style={styles.headerText}>Join Group</Text>
+					) : (
+						<Text></Text>
 					)}
 				</TouchableOpacity>
 			</View>
