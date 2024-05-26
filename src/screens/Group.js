@@ -13,12 +13,16 @@ import {
 	fetchGroupMembers,
 	fetchUserRecommendations,
 	isUserOnGroup,
+	deleteUserGroup,
+	addUserGroup,
 } from "../utils/database";
 
 export default function Group({ navigation, route, GlobalState }) {
+	const { session } = GlobalState;
 	const { groupName, groupId } = route.params;
 	const [groupMembers, setGroupMembers] = useState([]);
 	const [groupRecommendations, setGroupRecommendations] = useState([]);
+	const [isMember, setIsMember] = useState(false);
 
 	const [fetchError, setFetchError] = useState(null);
 
@@ -26,6 +30,9 @@ export default function Group({ navigation, route, GlobalState }) {
 		fetchGroupMembers(groupId)
 			.then((members) => {
 				setGroupMembers(members);
+				isUserOnGroup(session.sub, groupId).then((membership) => {
+					setIsMember(membership);
+				});
 
 				Promise.all(
 					members.map((user) => fetchUserRecommendations(user.id))
@@ -43,7 +50,50 @@ export default function Group({ navigation, route, GlobalState }) {
 				setFetchError("Error fetching group members: ");
 				Alert.alert(fetchError + error);
 			});
-	}, []);
+	}, [isMember]);
+
+	const handleJoinLeave = async () => {
+		if (isMember) {
+			//handle leave group
+
+			Alert.alert(
+				"Leaving Group",
+				"Are you sure you want to leave the group?",
+				[
+					{
+						text: "Yes",
+						onPress: () =>
+							deleteUserGroup(session.sub, groupId)
+								.then(() => {
+									Alert.alert("You have left the group!");
+									setIsMember(false);
+								})
+								.catch(() => {
+									Alert.alert(
+										"We could not process your request to leave the group. Please try again."
+									);
+								}),
+					},
+					{
+						text: "Cancel",
+						style: "cancel",
+					},
+				]
+			);
+		} else {
+			//handle join group
+			addUserGroup(session.sub, groupId)
+				.then(() => {
+					Alert.alert("You have joined the group!");
+					setIsMember(true);
+				})
+				.catch(() => {
+					Alert.alert(
+						"We could not process your request to join the group. Please try again."
+					);
+				});
+		}
+	};
 
 	let recommendations = groupRecommendations
 		.filter((elem) => elem.length)
@@ -71,9 +121,13 @@ export default function Group({ navigation, route, GlobalState }) {
 	return (
 		<View style={styles.body}>
 			<View style={styles.top}>
-				<Text>{groupName}</Text>
-				<TouchableOpacity>
-					<Text>Leave Group</Text>
+				<Text style={styles.headerText}>User: {session.full_name}</Text>
+				<TouchableOpacity onPress={handleJoinLeave}>
+					{isMember ? (
+						<Text style={styles.headerText}>Leave Group</Text>
+					) : (
+						<Text style={styles.headerText}>Join Group</Text>
+					)}
 				</TouchableOpacity>
 			</View>
 			<View style={styles.group}>
@@ -150,5 +204,8 @@ const styles = StyleSheet.create({
 		width: "40%",
 		height: 200,
 		margin: 5,
+	},
+	headerText: {
+		fontWeight: "bold",
 	},
 });
