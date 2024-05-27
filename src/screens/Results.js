@@ -94,6 +94,9 @@ const styles = StyleSheet.create({
 		justifyContent: "center",
 		width: "100%",
 		backgroundColor: "#14141405",
+    marginTop:70,
+    height:'100%',
+    marginBottom:60
 	},
 	separator: {
 		height: 2,

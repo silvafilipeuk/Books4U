@@ -4,7 +4,9 @@ import {
   Text,
   View,
   FlatList,
+  
   FlatListComponent
+  
 } from "react-native";
 import { SafeAreaView, ScrollView } from "react-native";
 
@@ -43,46 +45,71 @@ const reviews = [
 
 export default function Detail({ navigation, GlobalState }) {
   const { book } = GlobalState;
+  
 
   return (
     <SafeAreaView style={styles.screen}>
+      
+      <ScrollView>
+       
+
       <Header GlobalState={GlobalState} />
       <View style={styles.body}>
         <View style={styles.book}>
           <BookCard book={book} />
         </View>
-        <ScrollView>
-          <Text> {book.description} </Text>
-        </ScrollView>
+      
+          <Text>{book.description}</Text> 
+          
+          
+      
         <View style={styles.reviews}>
-          <FlatList
-            data={reviews}
-            renderItem={({ item }) => <ReviewCard review={item} />}
-            ItemSeparatorComponent={() => (
-              <View style={styles.separator}></View>
-            )}
-          />
+         {reviews.map((item)=>{
+
+
+          return(
+            <View key={item.id}>
+            <ReviewCard review={item}/>
+            </View>
+          )
+          })}
         </View>
+        
       </View>
-      <Footer style={styles.footer} navigation={navigation} />
+      <Footer navigation={navigation}GlobalState={GlobalState} />
+    </ScrollView>
     </SafeAreaView>
+    
+     
+     
   );
 }
 
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    backgroundColor: "#fff"
+    backgroundColor: "#fff",
+    alignItems: "center",
+		justifyContent: "center",
+   
+   
+    },
+  
+    body: {
+      flex: 1,
+    justifyContent: 'center',
+    flexGrow: 1,
+    backgroundColor: '#14141405',
+    marginTop: 140,
+    marginBottom: 80,
+   
+   
+  
   },
-  body: {
-    backgroundColor: "#14141405",
-    flexGrow: 1
-  },
-  book: {},
+ 
   reviews: {
-    flex: 1
-  },
-  footer: {
-    backgroundColor: "#fff"
-  }
+    
+    flex:1,
+   },
+
 });
