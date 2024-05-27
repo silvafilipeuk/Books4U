@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import {
+
   StyleSheet,
   Text,
   View,
   FlatList,
-  
   FlatListComponent
-  
-} from "react-native";
+  } 
+from "react-native";
 import { SafeAreaView, ScrollView } from "react-native";
 
 import Header from "../components/Header";
@@ -19,31 +19,32 @@ import ReviewCard from "../components/ReviewCard";
 import { fetchBook } from "../utils/books";
 
 const reviews = [
-  {
-    id: 1,
-    text: "Some text about how good the book was"
-  },
-  {
-    id: 2,
-    text: "Some text about how bad the book was"
-  },
-  {
-    id: 3,
-    text: "Irrelevant wordage about liking cheese"
-  },
-  {
-    id: 4,
-    text: "Rambling on about unrelated stuff"
-  },
-  {
-    id: 5,
-    text: "Blah, blah, cabbages"
-  }
+	{
+		id: 1,
+		text: "Some text about how good the book was",
+	},
+	{
+		id: 2,
+		text: "Some text about how bad the book was",
+	},
+	{
+		id: 3,
+		text: "Irrelevant wordage about liking cheese",
+	},
+	{
+		id: 4,
+		text: "Rambling on about unrelated stuff",
+	},
+	{
+		id: 5,
+		text: "Blah, blah, cabbages",
+	},
 ];
 
 // Uses book state set in Results to display an individual book.
 
 export default function Detail({ navigation, GlobalState }) {
+
   const { book } = GlobalState;
   
 
@@ -111,5 +112,6 @@ const styles = StyleSheet.create({
     
     flex:1,
    },
+
 
 });

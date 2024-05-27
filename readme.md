@@ -30,15 +30,13 @@ needed.
 
 -   session - the logged in user, empty if not logged in
 
-After login will be an object, with the following useful information for us, among others:
+After login will be an object, with the following useful information for us:
 
 ```
 {
-access_token: session_token,
-  user: {
-    app_metadata: { aud: "authenticated", id: "a5085d40-0d46-4ebe-b345-f33eceb13d41" }
-    user_metadata: { email: "user@email.com ", full_name: "User Full Name"}
-  }
+  email: "user@email.com",
+  full_name: "user full name",
+  sub: "user uuid"
 }
 ```
 

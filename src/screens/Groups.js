@@ -8,42 +8,53 @@ import {
 import Header from "../components/Header";
 import React, { useState, useEffect } from "react";
 import Footer from "../components/Footer";
-import { supabase, getSession } from "../utils/SupabaseClient";
+import { supabase } from "../utils/SupabaseClient";
 import Constants from "expo-constants";
 import CreateGroup from "./CreateGroup";
 
+import { fetchGroups, fetchUsersGroupsData } from "../utils/database";
+
 export default function Groups({ navigation, GlobalState }) {
-	const [user, setUser] = useState(null);
+	const { session } = GlobalState;
 	const [fetchError, setFetchError] = useState(null);
-	const [groups, setGroups] = useState(null);
-	const [join, setJoin] = useState(false);
+	const [groups, setGroups] = useState([]);
+	const [join, setJoin] = useState(null);
+	const [usersGroupsData, setUsersGroupsData] = useState([]);
 
 	useEffect(() => {
-		const fetchGroups = async () => {
-			const { data, error } = await supabase.from("groups").select();
-
-			if (error) {
-				setFetchError("cannot fetch groups");
-				setGroups(null);
-			}
-			if (data) {
-				setGroups(data);
-				setFetchError(null);
-			}
+		const fetchAllData = async () => {
+			await fetchUsersGroupsData(setUsersGroupsData);
+			await fetchGroups(setFetchError, setGroups);
 		};
-		setUser(getSession());
-		fetchGroups();
+
+		fetchAllData();
 	}, []);
 
 	const joinGroup = async (groupId) => {
-		try {
-			const addToGroup = await supabase
-				.from("users_groups")
-				.insert({ user_id: user, group_id: groupId });
-		} catch (err) {
-			console.log(err);
+		const userAlreadyInGroup = usersGroupsData.some(
+			(userData) =>
+				userData.user_id === session.sub &&
+				userData.group_id === groupId
+		);
+
+		if (userAlreadyInGroup) {
+			setJoin("You have already joined the group");
+			return;
 		}
-		setJoin(true);
+		try {
+			const { error } = await supabase
+				.from("users_groups")
+
+				.insert({ user_id: session.sub, group_id: groupId });
+
+			if (error) {
+				setJoin(`Failed to join group: ${error.message}`);
+			} else {
+				setJoin("Successfully joined group");
+			}
+		} catch (error) {
+			setJoin(`Failed to join group: ${error.message}`);
+		}
 	};
 
 	const renderBook = ({ item }) => (
@@ -70,11 +81,9 @@ export default function Groups({ navigation, GlobalState }) {
 
 	return (
 		<View style={styles.body}>
-			{join ? (
+			{join !== null ? (
 				<View style={styles.successHeader}>
-					<Text style={styles.success}>
-						Successfully joined group.
-					</Text>
+					<Text style={styles.success}>{join}</Text>
 				</View>
 			) : (
 				<Header GlobalState={GlobalState} />

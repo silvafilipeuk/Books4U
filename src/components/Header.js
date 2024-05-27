@@ -5,20 +5,11 @@ import React, { useEffect, useState } from "react";
 import MaterialIcon from "react-native-vector-icons/MaterialIcons";
 
 export default function Header({ GlobalState }) {
-	const [logged, setLogged] = useState(false);
-
-	useEffect(() => {
-		const getUser = async () => {
-			return getSession();
-		};
-
-		getUser().then((user) => {
-			setLogged(user);
-		});
-	}, [logged]);
+	const { session, setSession } = GlobalState;
 
 	async function handleLogout() {
 		let { error } = await supabase.auth.signOut();
+		setSession(null);
 
 		if (error) {
 			Alert.alert(error.message);
@@ -33,11 +24,9 @@ export default function Header({ GlobalState }) {
 					style={styles.image}
 				></Image>
 
-				{logged ? (
+				{session ? (
 					<View style={styles.user}>
-						<Text style={styles.text}>
-							{logged.user_metadata.full_name}
-						</Text>
+						<Text style={styles.text}>{session.full_name}</Text>
 						<Pressable onPress={handleLogout}>
 							<MaterialIcon
 								style={styles.icon}

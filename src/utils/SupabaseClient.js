@@ -24,5 +24,5 @@ export async function getSession() {
 		Promise.reject(error);
 	}
 
-	return data.session === null ? false : data.session.user;
+	return data.session === null ? false : data.session.user.user_metadata;
 }

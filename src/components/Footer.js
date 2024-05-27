@@ -4,18 +4,14 @@ import MaterialIcon from "react-native-vector-icons/MaterialIcons";
 import { getSession } from "../utils/SupabaseClient";
 import { useEffect, useState } from "react";
 
-export default function Footer({ navigation }) {
-	const [logged, setLogged] = useState(false);
+export default function Footer({ navigation, GlobalState }) {
+	const { session } = GlobalState;
 
 	useEffect(() => {
 		const getUser = async () => {
 			return getSession();
 		};
-
-		getUser().then((user) => {
-			setLogged(user);
-		});
-	}, [logged]);
+	}, [session]);
 
 	return (
 		<View style={styles.footer}>
@@ -26,7 +22,7 @@ export default function Footer({ navigation }) {
 					size={34}
 					onPress={() => navigation.navigate("Login")}
 				/>
-				{!logged ? (
+				{!session ? (
 					<Icon
 						style={styles.icon}
 						name="user-plus"
