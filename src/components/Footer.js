@@ -61,6 +61,9 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 		justifyContent: "center",
 		backgroundColor: "white",
+		height:40,
+		position:'relative'
+		
 	},
 	text: {
 		fontSize: 18,
@@ -68,12 +71,13 @@ const styles = StyleSheet.create({
 	},
 	wrap: {
 		flexDirection: "row",
-		justifyContent: "space-around",
+		justifyContent: "space-between",
 		position: "absolute",
 		left: 0,
 		bottom: 0,
 		right: 0,
 		marginBottom: 40,
+		
 	},
 	icon: {
 		marginHorizontal: 20,

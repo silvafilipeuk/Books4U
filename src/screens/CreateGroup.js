@@ -11,6 +11,12 @@ export default function CreateGroup({ navigation, GlobalState }) {
 	
 	const[groupName,setGroupName]=useState('')
 	const[description, setDescription]=useState('')
+	const [errors, setErrors] = useState('')
+	const validateGroup = (groupName) => {
+		const groupRegex = /^[a-zA-Z\s]{6,30}$/;
+		return groupRegex.test(groupName);
+	};
+
 	
 
 	const addGroup =async(group_name, group_description) => {
@@ -30,7 +36,22 @@ export default function CreateGroup({ navigation, GlobalState }) {
 	
 
 	  const handlePress = () => {
-		addGroup(groupName, description);
+
+		let valid=true;
+		let errorMessage='';
+
+
+		if (!validateGroup(groupName)) {
+			valid=false
+			errorMessage='Group name should contain only letters, should have a minimum of 6 characters and maximum of 30 characters'
+		}
+		setErrors(errorMessage);
+
+		if (valid) {
+			addGroup(groupName, description);
+		}
+
+		
 	  };
 	  
 	return (
@@ -73,8 +94,10 @@ export default function CreateGroup({ navigation, GlobalState }) {
 					title="Log in"
 					onPress={handlePress}
 				>
+					
 					<Text style={styles.text}>Create Group</Text>
 				</Pressable>
+				{errors ? <Text style={{ color: 'red' }}>{errors}</Text> : null}
 			</View>
 			<Footer navigation={navigation} GlobalState={GlobalState} />
 		</View>

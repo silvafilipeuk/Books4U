@@ -3,7 +3,7 @@ import Footer from "../components/Footer";
 import { useState } from "react";
 
 
-export default function BookReview({GlobalState}){
+export default function BookReview({GlobalState, navigation}){
 
 const[body,setBody]=useState('')
 

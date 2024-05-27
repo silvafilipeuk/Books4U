@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import Footer from "../components/Footer";
 import { fetchUserRecommendations } from "../utils/database";
-import { supabase } from "../utils/SupabaseClient";
+
 import { useEffect, useState } from "react";
 
 export default function Member({ navigation, route, GlobalState }) {
