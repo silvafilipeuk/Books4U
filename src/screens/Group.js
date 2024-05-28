@@ -186,13 +186,13 @@ const styles = StyleSheet.create({
 		marginTop: "0%",
 	},
 	group: {
-		
+		flex:9,
 		alignItems: "center",
 		justifyContent: "center",
 		backgroundColor: "#E2DFD0",
-		marginTop: 20,
+		marginTop: 28,
 		borderRadius: 5,
-		paddingBottom:5,
+		paddingBottom:10,
 		marginTop:2,
 		paddingTop:5
 
@@ -210,12 +210,15 @@ const styles = StyleSheet.create({
 		marginBottom: "3%",
 	},
 	memberList: {
-		marginBottom: "5%",
+		marginBottom: -20,
+		
+		
 	},
 	recommendations: {
 		fontSize: 18,
 		fontWeight: "bold",
-		marginBottom: "3%",
+		marginBottom: 0,
+		
 	},
 	container: {
 		flexDirection: "row",
