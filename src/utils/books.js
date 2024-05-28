@@ -123,13 +123,27 @@ export function fetchBooks(title, author) {
 }
 
 export function fetchFromGoogle(mistralResults) {
+  // Ensure that the mistral results are all for different books.
+
+  const titles = {};
+
+  for (const result of mistralResults) {
+    const title = result.title;
+
+    if (Object.hasOwn(titles, title)) {
+      console.log("Duplicate title", title);
+    } else {
+      titles[title] = result;
+    }
+  }
+
   const makeRequest = request =>
     request().catch(error => {
       console.log("Error");
       return Promise.reject(error);
     });
 
-  const requests = mistralResults.map(result =>
+  const requests = Object.values(titles).map(result =>
     makeRequest(() => fetchBooks(result.title, result.author))
   );
 
@@ -156,4 +170,10 @@ export function fetchFromGoogle(mistralResults) {
 
     return selected.map(book => extractData(book));
   });
+}
+
+function fetchBookById(volumeId) {
+  const query = volumeId;
+
+  return api.get(query).then(({ data: book }) => extractData(book));
 }

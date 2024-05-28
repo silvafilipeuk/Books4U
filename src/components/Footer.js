@@ -68,7 +68,8 @@ const styles = StyleSheet.create({
 		justifyContent: "center",
 		backgroundColor: "white",
 		height:40,
-		position:'relative'
+		position:'relative',
+		margin: 0
 		
 	},
 	text: {

@@ -30,32 +30,6 @@ export default function Groups({ navigation, GlobalState }) {
 		fetchAllData();
 	}, []);
 
-	const joinGroup = async (groupId) => {
-		const userAlreadyInGroup = usersGroupsData.some(
-			(userData) =>
-				userData.user_id === session.sub &&
-				userData.group_id === groupId
-		);
-
-		if (userAlreadyInGroup) {
-			setJoin("You have already joined the group");
-			return;
-		}
-		try {
-			const { error } = await supabase
-				.from("users_groups")
-
-				.insert({ user_id: session.sub, group_id: groupId });
-
-			if (error) {
-				setJoin(`Failed to join group: ${error.message}`);
-			} else {
-				setJoin("Successfully joined group");
-			}
-		} catch (error) {
-			setJoin(`Failed to join group: ${error.message}`);
-		}
-	};
 
 	const renderBook = ({ item }) => (
 		<TouchableOpacity
@@ -70,26 +44,14 @@ export default function Groups({ navigation, GlobalState }) {
 			<Text style={styles.groupName}>{item.group_name}</Text>
 			<Text>About us:</Text>
 			<Text>{item.group_description}</Text>
-			<TouchableOpacity
-				style={styles.button}
-				onPress={() => joinGroup(item.group_id)}
-			>
-				<Text>Click to join 📚</Text>
-			</TouchableOpacity>
 		</TouchableOpacity>
 	);
 
 	return (
 		<View style={styles.body}>
-			{join !== null ? (
-				<View style={styles.successHeader}>
-					<Text style={styles.success}>{join}</Text>
-				</View>
-			) : (
-				<Header GlobalState={GlobalState} />
-			)}
-
+			<Header GlobalState={GlobalState} />
 			<View style={styles.screen}>
+				<Text style={styles.info}>Click on the tiles to view group!</Text>
 				<FlatList
 					keyExtractor={(item) => item.group_id}
 					data={groups}
@@ -124,21 +86,14 @@ const styles = StyleSheet.create({
 	},
 	body: {
 		flex: 1,
-		padding: "5%",
 		backgroundColor: "white",
 	},
-	successHeader: {
-		flex: 1,
-		width: "100%",
-		alignItems: "center",
-		justifyContent: "center",
-		backgroundColor: "white",
-		paddingTop: Constants.statusBarHeight,
-	},
-	success: {
-		fontSize: 22,
-		fontWeight: "bold",
-	},
+	info:{
+		fontSize: 18,
+		fontWeight: 'bold',
+		marginBottom: 10
+	}
+	,
 	box: {
 		display: "flex",
 		alignItems: "center",
