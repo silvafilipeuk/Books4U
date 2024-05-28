@@ -86,7 +86,6 @@ const styles = StyleSheet.create({
 	},
 	body: {
 		flex: 1,
-		padding: "5%",
 		backgroundColor: "white",
 	},
 	info:{
