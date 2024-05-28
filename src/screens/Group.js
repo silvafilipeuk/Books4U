@@ -6,6 +6,8 @@ import {
 	FlatList,
 	Image,
 	Alert,
+	ScrollView
+	
 } from "react-native";
 import Footer from "../components/Footer";
 import { useEffect, useState } from "react";
@@ -16,6 +18,7 @@ import {
 	deleteUserGroup,
 	addUserGroup,
 } from "../utils/database";
+// import { ScrollView } from "react-native-web";
 
 export default function Group({ navigation, route, GlobalState }) {
 	const { session } = GlobalState;
@@ -141,6 +144,7 @@ export default function Group({ navigation, route, GlobalState }) {
 					)}
 				</TouchableOpacity>
 			</View>
+			
 			<View style={styles.group}>
 				<Text style={styles.groupName}>{groupName}</Text>
 				<Text style={styles.members}>Members</Text>
@@ -153,7 +157,9 @@ export default function Group({ navigation, route, GlobalState }) {
 				<Text style={styles.recommendations}>
 					Users recommendations:
 				</Text>
+				<ScrollView>
 				<View style={styles.container}>
+			
 					{recommendations.map((url, index) => (
 						<Image
 							key={index}
@@ -161,8 +167,12 @@ export default function Group({ navigation, route, GlobalState }) {
 							style={styles.Image}
 						/>
 					))}
+					
 				</View>
+				</ScrollView>
 			</View>
+			
+			
 			<Footer navigation={navigation} GlobalState={GlobalState} />
 		</View>
 	);
@@ -172,12 +182,10 @@ const styles = StyleSheet.create({
 	body: {
 		flex: 1,
 		backgroundColor: "white",
-		height:'100%',
-    	
+		
     	paddingLeft: '5%',
 		paddingRight: '5%',
-		paddingTop: '5%',
-		
+		paddingTop: '5%'
 
 	},
 	top: {
@@ -190,9 +198,10 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 		justifyContent: "center",
 		backgroundColor: "#E2DFD0",
-		marginTop: 28,
+		
+		
 		borderRadius: 5,
-		paddingBottom:10,
+		paddingBottom:5,
 		marginTop:2,
 		paddingTop:5
 
@@ -207,24 +216,27 @@ const styles = StyleSheet.create({
 	members: {
 		fontSize: 18,
 		fontWeight: "bold",
-		marginBottom: "3%",
+		marginBottom: "0%",
+		
 	},
 	memberList: {
-		marginBottom: -20,
-		
+		marginBottom: 0,
+		height:200
 		
 	},
 	recommendations: {
 		fontSize: 18,
 		fontWeight: "bold",
-		marginBottom: 0,
-		
+		marginBottom: "3%",
 	},
 	container: {
 		flexDirection: "row",
 		flexWrap: "wrap",
 		justifyContent: "space-around",
+		
 		width: "100%",
+		height:900
+		
 	},
 	Image: {
 		width: "40%",
