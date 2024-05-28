@@ -23,7 +23,9 @@ const apiKey = "RO0bojds8YfNol2aq6C48HQ524FOeCRW";
 
 const client = new MistralClient(apiKey);
 
-export const searchMistral = async query => {
+const searchMistral = async title => {
+  const query = "Find books similar to ${title}";
+
   response = await client
     .chat({
       model: "open-mistral-7b",
@@ -31,7 +33,7 @@ export const searchMistral = async query => {
         {
           role: "system",
           content:
-            "Always provide the result in JSON format with title and author"
+            "Always provide the result in JSON format with title, author and description"
         },
         {
           role: "system",
@@ -39,12 +41,11 @@ export const searchMistral = async query => {
         },
         {
           role: "system",
-          content:
-            "Only provide answers related to books, otherwise answer 'Not found'"
+          content: "Each object should be a single book"
         },
         {
           role: "system",
-          content: "Each object should be a single book"
+          content: "The results should not contain the book given in the query"
         },
         {
           role: "system",
@@ -63,20 +64,20 @@ export const searchMistral = async query => {
           content: "Don't list books in the same series as any book mentioned"
         },
         {
+          role: "system",
+          content: "Each result must be an existing book"
+        },
+        {
+          role: "system",
+          content: "Avoid books with non-latin characters in their title"
+        },
+        {
           role: "user",
           content: query
         }
       ]
     })
-    .then(response => {
-      const text = response.choices[0].message.content;
-      /*
-    for (const book of parseResponse(text)) {
-      console.log(book);
-    }
-*/
-      return text;
-    });
+    .then(response => response.choices[0].message.content);
 };
 
 function extractData(book) {
