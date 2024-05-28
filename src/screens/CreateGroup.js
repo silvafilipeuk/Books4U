@@ -6,15 +6,22 @@ import { StyleSheet, Text, View, TextInput, Pressable,KeyboardAvoidingView,
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { supabase } from "../utils/SupabaseClient";
+import { isLoggedIn } from "../utils/database";
 
 export default function CreateGroup({ navigation, GlobalState }) {
 	
 	const[groupName,setGroupName]=useState('')
 	const[description, setDescription]=useState('')
-	const [errors, setErrors] = useState('')
+	const [errors, setErrors] = useState({ groupName: "", description: "" });
 	const validateGroup = (groupName) => {
 		const groupRegex = /^[a-zA-Z\s]{6,30}$/;
 		return groupRegex.test(groupName);
+	};
+
+	const validateDescription = (description) => {
+		const descriptionRegex = /^[a-zA-Z0-9]{6,}$/;
+
+		return descriptionRegex.test(groupName);
 	};
 
 	
@@ -38,14 +45,19 @@ export default function CreateGroup({ navigation, GlobalState }) {
 	  const handlePress = () => {
 
 		let valid=true;
-		let errorMessage='';
+		let errors={ groupName: "", description: "" }
 
 
 		if (!validateGroup(groupName)) {
 			valid=false
-			errorMessage='Group name should contain only letters, should have a minimum of 6 characters and maximum of 30 characters'
+			errors.groupName='Group name should contain only letters, should have a minimum of 6 characters and maximum of 30 characters. Please try again'
 		}
-		setErrors(errorMessage);
+		if(!validateDescription(description)){
+
+			valid=false;
+			errors.description='This field must have a minimum of 6 characters. Please try again'
+		}
+		setErrors(errors);
 
 		if (valid) {
 			addGroup(groupName, description);
@@ -71,6 +83,7 @@ export default function CreateGroup({ navigation, GlobalState }) {
 					value={groupName}
 					onChangeText={(value) => setGroupName(value)}
 				/>
+				{errors.groupName ?( <Text style={{ color: 'red' }}>{errors.groupName}</Text>) : null}
 				<Text>Description:</Text>
 				<TextInput
 					multiline={true}
@@ -81,14 +94,8 @@ export default function CreateGroup({ navigation, GlobalState }) {
 					value={description}
 					onChangeText={(value) =>setDescription(value)}
 				/>
-				{/* <Text>Genre:</Text>
-				<TextInput
-					style={styles.input}
-					placeholder="Genre"
-					secureTextEntry
-					value={formData.genre}
-					onChangeText={(value) => handleChange("genre", value)}
-				/> */}
+				{errors.description ?( <Text style={{ color: 'red' }}>{errors.description}</Text>) : null}
+				
 				<Pressable
 					style={styles.buttons}
 					title="Log in"
@@ -97,7 +104,7 @@ export default function CreateGroup({ navigation, GlobalState }) {
 					
 					<Text style={styles.text}>Create Group</Text>
 				</Pressable>
-				{errors ? <Text style={{ color: 'red' }}>{errors}</Text> : null}
+				
 			</View>
 			<Footer navigation={navigation} GlobalState={GlobalState} />
 		</View>

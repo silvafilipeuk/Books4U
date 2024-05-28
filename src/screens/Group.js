@@ -172,9 +172,11 @@ const styles = StyleSheet.create({
 	body: {
 		flex: 1,
 		backgroundColor: "white",
-		paddingLeft: '5%',
+    height:'100%'
+    paddingLeft: '5%',
 		paddingRight: '5%',
 		paddingTop: '5%'
+
 	},
 	top: {
 		flexDirection: "row",
@@ -182,12 +184,17 @@ const styles = StyleSheet.create({
 		marginTop: "0%",
 	},
 	group: {
+		flex:7,
 		alignItems: "center",
 		justifyContent: "center",
 		backgroundColor: "#E2DFD0",
-		marginTop: "5%",
+		marginTop: 20,
 		borderRadius: 5,
-		padding: 5,
+		paddingTop: 60,
+		paddingBottom:80
+
+		
+		
 	},
 	groupName: {
 		fontSize: 22,

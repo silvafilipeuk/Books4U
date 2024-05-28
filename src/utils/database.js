@@ -3,6 +3,9 @@ import { supabase } from "../utils/SupabaseClient";
 // Takes a groupId as parameter and returns an array of members objects with full_name and id
 // Returns: [{name: "member1_name", id: "member1_id"}, {name: "member2_name", id: "member2_id"}]
 
+
+
+
 export const fetchGroupMembers = async (groupId) => {
 	const { data, error } = await supabase
 		.from("profile")

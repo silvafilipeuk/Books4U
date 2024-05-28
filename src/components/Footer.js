@@ -4,12 +4,15 @@ import MaterialIcon from "react-native-vector-icons/MaterialIcons";
 import { getSession } from "../utils/SupabaseClient";
 import { useEffect, useState } from "react";
 
+
 export default function Footer({ navigation, GlobalState }) {
 	const { session } = GlobalState;
+
 
 	useEffect(() => {
 		const getUser = async () => {
 			return getSession();
+			
 		};
 	}, [session]);
 
@@ -43,12 +46,15 @@ export default function Footer({ navigation, GlobalState }) {
 					size={34}
 					onPress={() => navigation.navigate("Groups")}
 				/>
+				{session ? (
 				<MaterialIcon
 					style={styles.icon}
 					name="group-add"
 					size={34}
 					onPress={() => navigation.navigate("CreateGroup")}
 				/>
+			) : null}
+
 			</View>
 		</View>
 	);
@@ -77,7 +83,7 @@ const styles = StyleSheet.create({
 		left: 0,
 		bottom: 0,
 		right: 0,
-		marginBottom: 40,
+		marginBottom: 20,
 		
 	},
 	icon: {
