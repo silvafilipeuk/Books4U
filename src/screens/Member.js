@@ -27,9 +27,12 @@ export default function Member({ navigation, route, GlobalState }) {
 
 	
 
+	
+
 	return (
 		<View style={styles.member}>
 			<Text style={styles.name}>{name}</Text>
+			{bookData.length === 0 ? <Text style={styles.message}>There are currently no recommendations from {name}</Text> :  
 			<FlatList
 			style={styles.list}
 			data={bookData}
@@ -48,6 +51,7 @@ export default function Member({ navigation, route, GlobalState }) {
 
 			)}
 			/>
+		}
 			
 			<Footer navigation={navigation} GlobalState={GlobalState} />
 		</View>
@@ -106,6 +110,12 @@ const styles = StyleSheet.create({
 		
 		
 	},
+	message: {
+		fontSize: 18,
+		fontWeight: 'bold',
+		textAlign: 'center'
+	}
+	,
 	Image: {
 		width: '30%',
 		height: 210,
