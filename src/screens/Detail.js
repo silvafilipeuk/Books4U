@@ -9,36 +9,34 @@ import ReviewCard from "../components/ReviewCard";
 
 // For now...
 import { fetchBook } from "../utils/books";
-
-const reviews = [
-	{
-		id: 1,
-		text: "Some text about how good the book was, Some text about how good the book was, Some text about how good the book was, Some text about how good the book was",
-	},
-	{
-		id: 2,
-		text: "Some text about how bad the book was",
-	},
-	{
-		id: 3,
-		text: "Irrelevant wordage about liking cheese",
-	},
-	{
-		id: 4,
-		text: "Rambling on about unrelated stuff",
-	},
-	{
-		id: 5,
-		text: "Blah, blah, cabbages",
-	},
-];
-
-// Uses book state set in Results to display an individual book.
+import { fetchBooksRecommendations, getBookId } from "../utils/database";
 
 export default function Detail({ navigation, GlobalState }) {
 	const { book } = GlobalState;
+	const [reviews, setReviews] = useState([
+		{
+			id: 1,
+			text: "This book don't have any review yet. You could be the first!",
+		},
+	]);
 
-	console.log(book);
+	useEffect(() => {
+		getBookId(book.id).then((book) => {
+			if (book) {
+				fetchBooksRecommendations(book.book_id).then((books) => {
+					setReviews(
+						books.map((book, index) => {
+							return {
+								id: index,
+								text: book.recommendation_text,
+								author: book.author,
+							};
+						})
+					);
+				});
+			}
+		});
+	}, []);
 
 	return (
 		<SafeAreaView style={styles.screen}>
