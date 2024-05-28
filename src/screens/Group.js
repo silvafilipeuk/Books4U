@@ -171,8 +171,10 @@ export default function Group({ navigation, route, GlobalState }) {
 const styles = StyleSheet.create({
 	body: {
 		flex: 1,
-		padding: "5%",
 		backgroundColor: "white",
+		paddingLeft: '5%',
+		paddingRight: '5%',
+		paddingTop: '5%'
 	},
 	top: {
 		flexDirection: "row",
