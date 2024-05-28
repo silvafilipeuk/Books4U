@@ -3,9 +3,6 @@ import { supabase } from "../utils/SupabaseClient";
 // Takes a groupId as parameter and returns an array of members objects with full_name and id
 // Returns: [{name: "member1_name", id: "member1_id"}, {name: "member2_name", id: "member2_id"}]
 
-
-
-
 export const fetchGroupMembers = async (groupId) => {
 	const { data, error } = await supabase
 		.from("profile")
@@ -220,4 +217,27 @@ export const getBookId = async (google_id) => {
 	}
 
 	return data[0];
+};
+
+export const fetchBooksRecommendations = async (bookId) => {
+	const { data, error } = await supabase.rpc("usersrecommendations", {
+		bookid: bookId,
+	});
+
+	if (error) {
+		Promise.reject(error);
+	}
+	if (data) {
+		const recommendations = data.map((recommendation) => {
+			return {
+				user_id: recommendation.user_id,
+				recommendation_text: recommendation.recommendation_text,
+				author: recommendation.full_name,
+			};
+		});
+
+		return recommendations;
+	}
+
+	return false;
 };

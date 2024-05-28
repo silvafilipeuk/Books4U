@@ -66,8 +66,7 @@ const styles = StyleSheet.create({
 		backgroundColor: "white",
 		height: 40,
 		position: "relative",
-		//margin: 0,
-		margin: Platform.OS === "android" ? 0 : 20,
+		marginBottom: Platform.OS === "android" ? 0 : 20,
 	},
 	text: {
 		fontSize: 18,
