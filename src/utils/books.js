@@ -165,11 +165,22 @@ export function fetchFromGoogle(mistralResults) {
       }
     }
 
+    // Ensure that there are no duplicates.
+
+    const filtered = {};
     for (const book of selected) {
+      if (Object.hasOwn(book.id)) {
+        console.log("Removed duplicate", book.id);
+      } else {
+        filtered[book.id] = book;
+      }
+    }
+
+    for (const book of Object.values(filtered)) {
       console.log(book.id, book.volumeInfo.title);
     }
 
-    return selected.map(book => extractData(book));
+    return Object.values(filtered).map(book => extractData(book));
   });
 }
 
