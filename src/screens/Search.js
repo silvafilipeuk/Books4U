@@ -13,7 +13,7 @@ import Footer from "../components/Footer";
 
 export default function Search({ navigation, GlobalState }) {
 	const [booksLike, setBooksLike] = useState("");
-	const [booksGenre, setBooksGenre] = useState("");
+	// const [booksGenre, setBooksGenre] = useState("");
 	const { setSearchQuery } = GlobalState;
 
 	async function handleSubmit(e) {
@@ -23,10 +23,10 @@ export default function Search({ navigation, GlobalState }) {
 		// search we will do based on booksLike or booksGenre content.
 
 		booksLike.length
-			? setSearchQuery(booksLike)
-			: setSearchQuery(booksGenre);
+			setSearchQuery(booksLike);
+			// : setSearchQuery(booksGenre);
 
-		setBooksLike(""), setBooksGenre("");
+		setBooksLike("");
 		navigation.navigate("Results");
 	}
 
@@ -41,11 +41,11 @@ export default function Search({ navigation, GlobalState }) {
 						value={booksLike}
 						onChangeText={(value) => {
 							setBooksLike(value);
-							setBooksGenre("");
+							
 						}}
 						keyboardAppearance="text"
 					/>
-					<Text style={styles.headerText}>Or:</Text>
+					{/* <Text style={styles.headerText}>Or:</Text>
 					<TextInput
 						style={styles.input}
 						placeholder="Search for books by genre..."
@@ -55,7 +55,7 @@ export default function Search({ navigation, GlobalState }) {
 							setBooksLike("");
 						}}
 						keyboardAppearance="text"
-					/>
+					/> */}
 					<TouchableOpacity
 						style={styles.buttons}
 						title="Search"
