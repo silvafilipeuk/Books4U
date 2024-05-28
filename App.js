@@ -106,10 +106,7 @@ export default function App() {
 					)}
 				</Stack.Screen>
 
-				<Stack.Screen
-					name="BookReview"
-					options={{ headerShown: false }}
-				>
+				<Stack.Screen name="BookReview" options={{ headerShown: true }}>
 					{(props) => (
 						<BookReview {...props} GlobalState={GlobalState} />
 					)}
