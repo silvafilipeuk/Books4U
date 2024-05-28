@@ -3,16 +3,14 @@ import Icon from "react-native-vector-icons/FontAwesome";
 import MaterialIcon from "react-native-vector-icons/MaterialIcons";
 import { getSession } from "../utils/SupabaseClient";
 import { useEffect, useState } from "react";
-
+import { Platform } from "react-native";
 
 export default function Footer({ navigation, GlobalState }) {
 	const { session } = GlobalState;
 
-
 	useEffect(() => {
 		const getUser = async () => {
 			return getSession();
-			
 		};
 	}, [session]);
 
@@ -47,14 +45,13 @@ export default function Footer({ navigation, GlobalState }) {
 					onPress={() => navigation.navigate("Groups")}
 				/>
 				{session ? (
-				<MaterialIcon
-					style={styles.icon}
-					name="group-add"
-					size={34}
-					onPress={() => navigation.navigate("CreateGroup")}
-				/>
-			) : null}
-
+					<MaterialIcon
+						style={styles.icon}
+						name="group-add"
+						size={34}
+						onPress={() => navigation.navigate("CreateGroup")}
+					/>
+				) : null}
 			</View>
 		</View>
 	);
@@ -67,10 +64,10 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 		justifyContent: "center",
 		backgroundColor: "white",
-		height:40,
-		position:'relative',
-		margin: 0
-		
+		height: 40,
+		position: "relative",
+		//margin: 0,
+		margin: Platform.OS === "android" ? 0 : 20,
 	},
 	text: {
 		fontSize: 18,
@@ -84,7 +81,6 @@ const styles = StyleSheet.create({
 		bottom: 0,
 		right: 0,
 		marginBottom: 14,
-		
 	},
 	icon: {
 		marginHorizontal: 20,
