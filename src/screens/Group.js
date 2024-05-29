@@ -207,17 +207,10 @@ const styles = StyleSheet.create({
 	},
 	wrapper:{
 		
-		width:'100%',
-		
-		flexDirection:'row',
-		justifyContent:'space-around',
-		
-
-		
-		
-		
+		width:'50%',
 	},
-	top: {
+	
+		top: {
 		flexDirection: "row",
 		justifyContent: "space-between",
 		marginTop: "0%",
@@ -261,15 +254,15 @@ const styles = StyleSheet.create({
 		flexDirection: "row",
 		flexWrap: "wrap",
 		justifyContent: "space-around",
-		
 		width: "100%",
 		height:'100%'
 		
 	},
 	Image: {
-		width: "40%",
-		height: 200,
+		width: "100%",
+		height: 220,
 		margin: 5,
+		resizeMode:'contain'
 	},
 	headerText: {
 		fontWeight: "bold",
