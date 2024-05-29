@@ -10,7 +10,7 @@ export default function ReviewCard({ review }) {
 			<Text style={styles.text}>{text} </Text>
 		</View>
 	) : (
-		<Text style={styles.text}>{text} </Text>
+		<Text style={styles.textNoReview}>{text} </Text>
 	);
 }
 
@@ -38,5 +38,9 @@ const styles = StyleSheet.create({
 	text: {
 		fontSize: 16,
 		color: "white",
+	},
+	textNoReview: {
+		fontSize: 16,
+		color: "black",
 	},
 });
