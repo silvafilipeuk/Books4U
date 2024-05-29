@@ -49,3 +49,28 @@ on those books. So to access things like images of book covers and descriptions 
 queried through its public API. Since the AI provides multiple books, multiple queries of the Google books
 are done concurrently, with each query typically providing multiple versions of the same book which can then
 be ranked, filtered and merged together to provide the data used on the results page of the app.
+
+## Questions
+
+1. What have you learned by completing this project?
+
+Apart from getting to grips with a number of technologies which were new to us and which we had to get up to
+speed with relatively quickly, this was an opportunity to plan and coordinate a small team project using
+appropriate online tools. In particular we discovered how effectively Trello could be used to partition a
+larger project into smaller tasks that could be completed individually or as a pair.
+
+2. What unexpected problems did you encounter along the way?
+
+It's debatable whether it should be considered unexpected since it is something we had to get to grips with
+quickly, but the bahaviour of the AI was at times surprising. We discovered that for some searches where the
+number of results were relatively low, the AI started inventing data that didn't exist. This extended in some
+cases to completely inventing a book or returning made up ISBN numbers. This forced us to double check all
+details with Google Books even though it turned out that it too wasn't to be entirely trusted.
+
+3. What would you now do differently?
+
+This is probably very specific to mobile apps such as ours, but concentrate on functionality and getting a
+MVP working as quickly as possible regardless of how it looks on screen. An easy trap to fall into with this
+kind of project is to try and polish the UI of existing elements before having written other essential
+components. It turns out it is easier to tidy up the styling after all components are available and this also
+means that such styling is then more uniform across the app.
