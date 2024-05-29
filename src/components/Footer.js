@@ -83,6 +83,5 @@ const styles = StyleSheet.create({
 	},
 	icon:{
 		color: '#606060'
-	}
-
+	},
 });
