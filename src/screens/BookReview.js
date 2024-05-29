@@ -29,6 +29,7 @@ export default function BookReview({ GlobalState, route, navigation }) {
 			})
 			.catch((error) => {
 				if (error.code !== "23505") {
+					console.log(error)
 					Alert.alert(
 						"Something went wrong, please try adding your recommendation again."
 					);

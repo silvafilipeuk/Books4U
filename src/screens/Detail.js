@@ -19,13 +19,16 @@ export default function Detail({ navigation, GlobalState }) {
 			text: "This book don't have any review yet. You could be the first!",
 		},
 	]);
-
+	
 	useEffect(() => {
-		getBookId(book.id).then((book) => {
+		
+			getBookId(book.id).then((book) => {
+		
 			if (book) {
 				fetchBooksRecommendations(book.book_id).then((books) => {
 					setReviews(
 						books.map((book, index) => {
+							
 							return {
 								id: index,
 								text: book.recommendation_text,
@@ -36,6 +39,7 @@ export default function Detail({ navigation, GlobalState }) {
 				});
 			}
 		});
+	
 	}, []);
 
 	return (

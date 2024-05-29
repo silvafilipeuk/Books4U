@@ -26,6 +26,7 @@ export default function Group({ navigation, route, GlobalState }) {
 	const [groupMembers, setGroupMembers] = useState([]);
 	const [groupRecommendations, setGroupRecommendations] = useState([]);
 	const [isMember, setIsMember] = useState(false);
+	const{setBook}=GlobalState;
 
 	const [fetchError, setFetchError] = useState(null);
 
@@ -43,6 +44,7 @@ export default function Group({ navigation, route, GlobalState }) {
 					members.map((user) => fetchUserRecommendations(user.id))
 				)
 					.then((recommendations) => {
+						
 						setGroupRecommendations(recommendations);
 						setFetchError(null);
 					})
@@ -104,7 +106,14 @@ export default function Group({ navigation, route, GlobalState }) {
 		.filter((elem) => elem.length)
 		.map((userRecommentations) => {
 			return userRecommentations.map(
-				(recommendation) => recommendation.book_cover_url
+				
+				(recommendation) => { 
+					
+					return {
+						thumbnail:recommendation.book_cover_url, id:recommendation.google_id, group:true, title:recommendation.book_title,author:recommendation.book_author
+					}				
+				}
+
 			);
 		});
 
@@ -159,17 +168,24 @@ export default function Group({ navigation, route, GlobalState }) {
 				</Text>
 				<ScrollView>
 				<View style={styles.container}>
-			
-					{recommendations.map((url, index) => (
-						<Image
-							key={index}
-							source={{ uri: url }}
-							style={styles.Image}
-						/>
-					))}
-					
-				</View>
-				</ScrollView>
+      {recommendations.map((book, index) => (
+		
+        <TouchableOpacity
+          key={index}
+          onPress={() => {
+			setBook(book)
+			navigation.navigate('Detail')}}
+			style={styles.wrapper}
+        >
+		
+          <Image
+            source={{ uri:book.thumbnail }}
+            style={styles.Image}
+          />
+        </TouchableOpacity>
+      ))}
+    </View>
+	</ScrollView>
 			</View>
 			
 			
@@ -185,8 +201,21 @@ const styles = StyleSheet.create({
 		
     	paddingLeft: '5%',
 		paddingRight: '5%',
-		paddingTop: '5%'
+		paddingTop: '5%',
+		
 
+	},
+	wrapper:{
+		
+		width:'100%',
+		
+		flexDirection:'row',
+		justifyContent:'space-around',
+		
+
+		
+		
+		
 	},
 	top: {
 		flexDirection: "row",
@@ -198,12 +227,11 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 		justifyContent: "center",
 		backgroundColor: "#E2DFD0",
-		
-		
 		borderRadius: 5,
 		paddingBottom:5,
 		marginTop:2,
-		paddingTop:5
+		paddingTop:5,
+	
 
 		
 		
