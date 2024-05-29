@@ -43,7 +43,7 @@ export default function Groups({ navigation, GlobalState }) {
 		>
 			<Text style={styles.groupName}>{item.group_name}</Text>
 			<Text>About us:</Text>
-			<Text>{item.group_description}</Text>
+			<Text style={{textAlign: 'justify'}}>{item.group_description}</Text>
 		</TouchableOpacity>
 	);
 
@@ -54,6 +54,8 @@ export default function Groups({ navigation, GlobalState }) {
 				<Text style={styles.info}>Click on the tiles to view group!</Text>
 				<FlatList
 					keyExtractor={(item) => item.group_id}
+					ItemSeparatorComponent={() => (
+						<View style={styles.separator}></View>)}
 					data={groups}
 					renderItem={renderBook}
 					showsVerticalScrollIndicator={false}
@@ -66,7 +68,7 @@ export default function Groups({ navigation, GlobalState }) {
 }
 const styles = StyleSheet.create({
 	screen: {
-		flex: 8,
+		flex: 9,
 		alignItems: "center",
 		justifyContent: "center",
 		backgroundColor: "white",
@@ -91,27 +93,27 @@ const styles = StyleSheet.create({
 	info:{
 		fontSize: 18,
 		fontWeight: 'bold',
-		marginBottom: 10
+		marginBottom: 10,
+		color: '#606060'
 	}
 	,
 	box: {
 		display: "flex",
 		alignItems: "center",
-		backgroundColor: "#E2DFD0",
 		width: "100%",
-		marginTop: 0,
-		marginBottom: 10,
-		borderRadius: 5,
-		padding: 5,
-	},
-	button: {
 		marginTop: 10,
-		backgroundColor: "#E6FF94",
-		padding: 10,
-		borderRadius: 5,
+		marginBottom: 10,
+		padding: 5,
 	},
 	groupName: {
 		fontSize: 22,
 		fontWeight: "bold",
+		color: '#007AFF',
+		marginBottom: 10
 	},
+	separator: {
+		height: 3,
+		backgroundColor: "#606060",
+		margin: 30,
+	}
 });
