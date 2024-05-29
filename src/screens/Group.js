@@ -119,7 +119,7 @@ export default function Group({ navigation, route, GlobalState }) {
 				navigation.navigate("Member", { name: item.name, id: item.id });
 			}}
 		>
-			<Text>{item.name}</Text>
+			<Text style={styles.names}>{item.name}</Text>
 		</TouchableOpacity>
 	);
 
@@ -128,7 +128,7 @@ export default function Group({ navigation, route, GlobalState }) {
 			<View style={styles.top}>
 				{session ? (
 					<Text style={styles.headerText}>
-						User: {session.full_name}
+						{session.full_name}
 					</Text>
 				) : (
 					<Text style={styles.headerText}>{groupName}</Text>
@@ -182,7 +182,7 @@ const styles = StyleSheet.create({
 	body: {
 		flex: 1,
 		backgroundColor: "white",
-		
+
     	paddingLeft: '5%',
 		paddingRight: '5%',
 		paddingTop: '5%'
@@ -197,37 +197,34 @@ const styles = StyleSheet.create({
 		flex:9,
 		alignItems: "center",
 		justifyContent: "center",
-		backgroundColor: "#E2DFD0",
-		
-		
+		backgroundColor: "white",
 		borderRadius: 5,
 		paddingBottom:5,
 		marginTop:2,
-		paddingTop:5
-
-		
-		
+		paddingTop:5	
 	},
 	groupName: {
 		fontSize: 22,
 		fontWeight: "bold",
 		marginBottom: "5%",
+		color: '#606060'
 	},
 	members: {
 		fontSize: 18,
 		fontWeight: "bold",
 		marginBottom: "0%",
-		
+		color: '#606060'
+
 	},
 	memberList: {
 		marginBottom: 0,
-		height:200
-		
+		height: 240
 	},
 	recommendations: {
 		fontSize: 18,
 		fontWeight: "bold",
 		marginBottom: "3%",
+		color: '#606060'
 	},
 	container: {
 		flexDirection: "row",
@@ -245,5 +242,15 @@ const styles = StyleSheet.create({
 	},
 	headerText: {
 		fontWeight: "bold",
+		color: '#606060'
 	},
+	names:{
+		borderWidth: 2,
+		borderColor: 'white',
+		textAlign: 'center',
+		padding: 5,
+		margin: '2%',
+		color: 'white',
+		backgroundColor: '#007AFF' 
+	}
 });

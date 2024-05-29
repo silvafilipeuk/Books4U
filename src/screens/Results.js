@@ -56,7 +56,7 @@ export default function Results({ navigation, GlobalState }) {
 
 	return (
 		<SafeAreaView style={styles.screen}>
-			<Header GlobalState={GlobalState} />
+			{/* <Header GlobalState={GlobalState} /> */}
 			<View style={styles.body}>
 				<FlatList
 					data={books}
@@ -89,21 +89,18 @@ const styles = StyleSheet.create({
 		justifyContent: "center",
 	},
 	body: {
-		flex: 8,
+		flex: 9,
 		alignItems: "center",
 		justifyContent: "center",
 		width: "100%",
 		backgroundColor: "#14141405",
-    marginTop:70,
-    height:'100%',
-    marginBottom:60
+    	marginTop:30,
+    	height:'100%',
+    	marginBottom: 30
 	},
 	separator: {
-		height: 2,
-		backgroundColor: "#f1f2f6",
+		height: 3,
+		backgroundColor: "#606060",
 		margin: 30,
-	},
-	footer: {
-		justifyContent: "flex-end",
-	},
+	}
 });
