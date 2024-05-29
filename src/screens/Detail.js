@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
 	},
 	body: {
 		flex: 1,
-		flexGrow: 3,
+		flexGrow: 5,
 		backgroundColor: "#FFF",
 		flexBasis: "auto",
 		padding: 10,
@@ -128,10 +128,5 @@ const styles = StyleSheet.create({
 		color: "#FFF",
 		fontSize: 16,
 		textAlign: "center",
-	},
-	footer: {
-		flex: 1,
-		flexShrink: 1,
-		flexBasis: "auto",
 	},
 });
