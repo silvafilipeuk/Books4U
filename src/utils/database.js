@@ -46,6 +46,8 @@ export const fetchUserRecommendations = async (userId) => {
 				book_id: recommendation.book_id,
 				book_title: recommendation.book_title,
 				recommendation_text: recommendation.recommendation_text,
+				book_author:recommendation.book_author,
+				google_id:recommendation.google_id
 			};
 		});
 
