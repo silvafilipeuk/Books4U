@@ -44,7 +44,7 @@ export default function Detail({ navigation, GlobalState }) {
 
 	return (
 		<SafeAreaView style={styles.screen}>
-			<Header GlobalState={GlobalState} style={styles.header} />
+			{/* <Header GlobalState={GlobalState} style={styles.header} /> */}
 			<ScrollView style={styles.body}>
 				<View style={styles.book}>
 					<BookCard book={book} />
@@ -99,13 +99,14 @@ const styles = StyleSheet.create({
 	buttons: {
 		alignSelf: "center",
 		width: 200,
-		backgroundColor: "black",
+		backgroundColor: "#007AFF",
 		borderRadius: 20,
 		padding: 12,
 		margin: 20,
 	},
 	description: {
-		paddingTop: 10,
+		padding: 10,
+
 		margin: 10,
 		textAlign: "justify",
 		fontSize: 16,
@@ -121,7 +122,7 @@ const styles = StyleSheet.create({
 	},
 	body: {
 		flex: 1,
-		flexGrow: 3,
+		flexGrow: 5,
 		backgroundColor: "#FFF",
 		flexBasis: "auto",
 		padding: 10,
@@ -131,10 +132,5 @@ const styles = StyleSheet.create({
 		color: "#FFF",
 		fontSize: 16,
 		textAlign: "center",
-	},
-	footer: {
-		flex: 1,
-		flexShrink: 1,
-		flexBasis: "auto",
 	},
 });

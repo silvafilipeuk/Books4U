@@ -155,10 +155,12 @@ const styles = StyleSheet.create({
 	headerText: {
 		fontSize: 38,
 		fontWeight: "bold",
+		color:'#606060'
 	},
 	subHeaderText: {
 		fontSize: 18,
 		padding: 10,
+		color: '#606060'
 	},
 	input: {
 		height: 48,
@@ -172,7 +174,7 @@ const styles = StyleSheet.create({
 	},
 	buttons: {
 		width: 300,
-		backgroundColor: "black",
+		backgroundColor: "#007AFF",
 		borderRadius: 20,
 		padding: 12,
 	},

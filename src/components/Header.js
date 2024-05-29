@@ -55,6 +55,7 @@ const styles = StyleSheet.create({
 		fontSize: 16,
 		fontWeight: "700",
 		alignItems: "center",
+		color: '#606060'
 	},
 	user: {
 		flexDirection: "row",

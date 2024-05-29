@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 		justifyContent: "center",
 		backgroundColor: "white",
-		height: 40,
+		height: 30,
 		position: "relative",
 		marginBottom: Platform.OS === "android" ? 0 : 20,
 	},
@@ -74,14 +74,14 @@ const styles = StyleSheet.create({
 	},
 	wrap: {
 		flexDirection: "row",
-		justifyContent: "space-between",
+		justifyContent: "space-around",
 		position: "absolute",
 		left: 0,
 		bottom: 0,
 		right: 0,
 		marginBottom: 14,
 	},
-	icon: {
-		marginHorizontal: 20,
+	icon:{
+		color: '#606060'
 	},
 });

@@ -16,7 +16,7 @@ export default function BookCard({ book }) {
 
 const styles = StyleSheet.create({
 	container: {
-		//flex: 1,
+		flex: 1,
 		width: "100%",
 		alignItems: "center",
 		justifyContent: "center",
@@ -32,8 +32,8 @@ const styles = StyleSheet.create({
 		fontWeight: "400",
 	},
 	cover: {
-		width: 300,
-		height: 300,
+		width: 250,
+		height: 250,
 		resizeMode: "contain",
 	},
 });

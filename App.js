@@ -66,6 +66,19 @@ export default function App() {
 		searchQuery,
 	};
 
+	// const options = {
+	// 	title: "",
+    //       headerStyle: {
+    //         backgroundColor: '#f4511e',
+	// 		margin: 0,
+    //       },
+	// 	  headerShown: true,
+    //       headerTintColor: '#fff',
+    //       headerTitleStyle: {
+    //         fontWeight: 'bold',
+    //       },
+	// }
+
 	// Navigation.
 
 	return (

@@ -51,7 +51,7 @@ export default function BookReview({ GlobalState, route, navigation }) {
 
 	return (
 		<View style={styles.container}>
-			<Header GlobalState={GlobalState} style={styles.header} />
+			{/* <Header GlobalState={GlobalState} style={styles.header} /> */}
 			<View style={styles.body}>
 				<ScrollView style={styles.form}>
 					<View style={styles.book}>
@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
 	},
 	body: {
 		flex: 1,
-		flexGrow: 4,
+		flexGrow: 5,
 		backgroundColor: "#FFF",
 		flexBasis: "auto",
 		padding: 10,
@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
 		margin: 10,
 	},
 	input: {
-		height: 200,
+		height: 150,
 		borderColor: "black",
 		borderWidth: 1,
 		width: "90%",
@@ -129,10 +129,11 @@ const styles = StyleSheet.create({
 	bold: {
 		alignSelf: "center",
 		fontWeight: "bold",
+		color:'#606060'
 	},
 	buttons: {
 		width: 300,
-		backgroundColor: "black",
+		backgroundColor: "#007AFF",
 		borderRadius: 20,
 		padding: 12,
 		marginTop: 30,
