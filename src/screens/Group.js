@@ -6,8 +6,7 @@ import {
 	FlatList,
 	Image,
 	Alert,
-	ScrollView
-	
+	ScrollView,
 } from "react-native";
 import Footer from "../components/Footer";
 import { useEffect, useState } from "react";
@@ -26,7 +25,7 @@ export default function Group({ navigation, route, GlobalState }) {
 	const [groupMembers, setGroupMembers] = useState([]);
 	const [groupRecommendations, setGroupRecommendations] = useState([]);
 	const [isMember, setIsMember] = useState(false);
-	const{setBook}=GlobalState;
+	const { setBook } = GlobalState;
 
 	const [fetchError, setFetchError] = useState(null);
 
@@ -44,7 +43,6 @@ export default function Group({ navigation, route, GlobalState }) {
 					members.map((user) => fetchUserRecommendations(user.id))
 				)
 					.then((recommendations) => {
-						
 						setGroupRecommendations(recommendations);
 						setFetchError(null);
 					})
@@ -105,22 +103,23 @@ export default function Group({ navigation, route, GlobalState }) {
 	let recommendations = groupRecommendations
 		.filter((elem) => elem.length)
 		.map((userRecommentations) => {
-			return userRecommentations.map(
-				
-				(recommendation) => { 
-					
-					return {
-						thumbnail:recommendation.book_cover_url, id:recommendation.google_id, group:true, title:recommendation.book_title,author:recommendation.book_author
-					}				
-				}
-
-			);
+			return userRecommentations.map((recommendation) => {
+				return {
+					thumbnail: recommendation.book_cover_url,
+					id: recommendation.google_id,
+					title: recommendation.book_title,
+					author: recommendation.book_author,
+				};
+			});
 		});
 
 	recommendations = recommendations.flat();
-	recommendations = recommendations.filter((url, index) => {
-		return recommendations.indexOf(url) === index;
-	});
+
+	recommendations = [
+		...new Map(recommendations.map((item) => [item["id"], item])).values(),
+	];
+
+	console.log(recommendations);
 
 	const renderedMembers = ({ item }) => (
 		<TouchableOpacity
@@ -136,9 +135,7 @@ export default function Group({ navigation, route, GlobalState }) {
 		<View style={styles.body}>
 			<View style={styles.top}>
 				{session ? (
-					<Text style={styles.headerText}>
-						{session.full_name}
-					</Text>
+					<Text style={styles.headerText}>{session.full_name}</Text>
 				) : (
 					<Text style={styles.headerText}>{groupName}</Text>
 				)}
@@ -153,7 +150,7 @@ export default function Group({ navigation, route, GlobalState }) {
 					)}
 				</TouchableOpacity>
 			</View>
-			
+
 			<View style={styles.group}>
 				<Text style={styles.groupName}>{groupName}</Text>
 				<Text style={styles.members}>Members</Text>
@@ -167,28 +164,26 @@ export default function Group({ navigation, route, GlobalState }) {
 					Users recommendations:
 				</Text>
 				<ScrollView>
-				<View style={styles.container}>
-      {recommendations.map((book, index) => (
-		
-        <TouchableOpacity
-          key={index}
-          onPress={() => {
-			setBook(book)
-			navigation.navigate('Detail')}}
-			style={styles.wrapper}
-        >
-		
-          <Image
-            source={{ uri:book.thumbnail }}
-            style={styles.Image}
-          />
-        </TouchableOpacity>
-      ))}
-    </View>
-	</ScrollView>
+					<View style={styles.container}>
+						{recommendations.map((book, index) => (
+							<TouchableOpacity
+								key={index}
+								onPress={() => {
+									setBook(book);
+									navigation.navigate("Detail");
+								}}
+								style={styles.wrapper}
+							>
+								<Image
+									source={{ uri: book.thumbnail }}
+									style={styles.Image}
+								/>
+							</TouchableOpacity>
+						))}
+					</View>
+				</ScrollView>
 			</View>
-			
-			
+
 			<Footer navigation={navigation} GlobalState={GlobalState} />
 		</View>
 	);
@@ -199,82 +194,76 @@ const styles = StyleSheet.create({
 		flex: 1,
 		backgroundColor: "white",
 
-    	paddingLeft: '5%',
-		paddingRight: '5%',
-		paddingTop: '5%',
-		
+		paddingLeft: "5%",
+		paddingRight: "5%",
+		paddingTop: "5%",
+	},
+	wrapper: {
+		width: "50%",
+	},
 
-	},
-	wrapper:{
-		
-		width:'50%',
-	},
-	
-		top: {
+	top: {
 		flexDirection: "row",
 		justifyContent: "space-between",
 		marginTop: "0%",
 	},
 	group: {
-		flex:9,
+		flex: 9,
 		alignItems: "center",
 		justifyContent: "center",
 
 		backgroundColor: "white",
 		borderRadius: 5,
-		paddingBottom:5,
-		marginTop:2,
-		paddingTop:5	
-
+		paddingBottom: 5,
+		marginTop: 2,
+		paddingTop: 5,
 	},
 	groupName: {
 		fontSize: 22,
 		fontWeight: "bold",
 		marginBottom: "5%",
-		color: '#606060'
+		color: "#606060",
 	},
 	members: {
 		fontSize: 18,
 		fontWeight: "bold",
 		marginBottom: "0%",
-		color: '#606060'
-
+		color: "#606060",
 	},
 	memberList: {
 		marginBottom: 0,
-		height: 240
+		height: 240,
 	},
 	recommendations: {
 		fontSize: 18,
 		fontWeight: "bold",
 		marginBottom: "3%",
-		color: '#606060'
+		color: "#606060",
 	},
 	container: {
 		flexDirection: "row",
 		flexWrap: "wrap",
 		justifyContent: "space-around",
 		width: "100%",
-		height:'100%'
-		
+		height: "100%",
 	},
 	Image: {
 		width: "100%",
 		height: 220,
 		margin: 5,
-		resizeMode:'contain'
+		resizeMode: "contain",
 	},
 	headerText: {
 		fontWeight: "bold",
-		color: '#606060'
+		color: "#606060",
 	},
-	names:{
+	names: {
 		borderWidth: 2,
-		borderColor: 'white',
-		textAlign: 'center',
+		borderColor: "white",
+		textAlign: "center",
 		padding: 5,
-		margin: '2%',
-		color: 'white',
-		backgroundColor: '#007AFF' 
-	}
+		margin: "2%",
+		color: "white",
+		backgroundColor: "#007AFF",
+	},
 });
