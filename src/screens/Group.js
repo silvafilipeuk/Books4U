@@ -119,8 +119,6 @@ export default function Group({ navigation, route, GlobalState }) {
 		...new Map(recommendations.map((item) => [item["id"], item])).values(),
 	];
 
-	console.log(recommendations);
-
 	const renderedMembers = ({ item }) => (
 		<TouchableOpacity
 			onPress={() => {
