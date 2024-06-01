@@ -71,3 +71,10 @@ The books and book state use objects of the following format.
   description: string
 }
 ```
+
+# Authors:
+
+- [Filipe da Silva](https://github.com/silvafilipeuk)
+- [Massimo Ortu](https://github.com/Maestro1985)
+- [Nobel Limbu](https://github.com/Nlim97)
+- [Sean Holdsworth](https://github.com/SeanHoldsworth)
