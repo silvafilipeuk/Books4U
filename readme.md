@@ -14,6 +14,13 @@ The project is created with React Native and Expo to ensure compability with any
 
 - To be done.
 
+## Environment Variables
+
+You will need a environment variable called .env.dev with the following content;
+
+SUPABASE_KEY=YOUR_SUPABASE_API_KEY
+MISTRAL_KEY=YOUR_MISTRAL_API_KEY
+
 ## State Variables
 
 The state variables are all contained in the GlobalState object which is
