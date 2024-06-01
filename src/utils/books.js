@@ -19,7 +19,7 @@ const api = axios.create({
 
 import MistralClient from "./mistralai.js";
 import { ActivityIndicatorComponent } from "react-native";
-const apiKey = "RO0bojds8YfNol2aq6C48HQ524FOeCRW";
+const apiKey = process.env.MISTRAL_KEY;
 
 const client = new MistralClient(apiKey);
 
