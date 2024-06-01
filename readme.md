@@ -1,25 +1,18 @@
-# Books 4 u
+# Books4U
 
-## Instructions for creating new empty JavaScript Project
+A social mobile App that uses AI to recommend books based on an open ended query provided by the user.
+I.e: "I just read the Percy Jackson series, can you recommend me something similar?"
 
-npx create-expo-app \<project-name\> --template
+The app then respond with a series of similar books, which with we fetch all the books details from the Google books API,
+to present the user with a detailed book page, with books cover picture, title, author, description and reviews.
 
-(Select Blank)
+The app also have the social aspect of it, where users can create groups of similar interest and share books and reviews of these books.
 
-cd \<project-name\>
+The project is created with React Native and Expo to ensure compability with any device, Supabase that handles users authentication and the App database, Mistral AI API to produce the results and Google Books API to fecth the details of each book.
 
-npx expo install react-native-web react-dom @expo/metro-runtime
+## Video demonstrating the App functionalities:
 
-Always use npx expo install rather than 'npm install' to make sure modules
-are compatible with expo version.
-
-npx expo install @react-navigation/native @react-navigation/native-stack
-
-npx expo install react-native-screens react-native-safe-context
-
-npx expo install expo-constants react-native-vector-icons
-
-npx expo start
+- To be done.
 
 ## State Variables
 
@@ -45,14 +38,6 @@ After login will be an object, with the following useful information for us:
 -   book - the individual selected book passed to Detail page
 
 -   searchQuery - Will receive the query string from the search base, to be used by results.js to produce the results.
-
-(Please add any others here...)
-
-## Navigation
-
-Everything we need to do regarding navigation (moving between pages and
-to the previous page) can be done with the standard React Navigation
-library.
 
 ## Google Books
 
@@ -84,31 +69,5 @@ The books and book state use objects of the following format.
   author: string,
   thumbnail: string, - URL which can act as Image source uri
   description: string
-}
-```
-
-## Database
-
-There needs to be some way of linking the book id used by Google Books and
-the id used by the books table in the database. Probably the simplest way
-will be to hold the Google id as another column in the books table.
-
-To access reviews, functions will need to be provided in src/utils/database.js
-which will convert the data into things like Review and Group objects for use
-in the frontend code.
-
-```
-fetchReviewsByBook(google_id) -> [ Review ]
-```
-
-## Review Object
-
-The Supabase Postgres database containing group and review information will
-be used to update the 'reviews' state variable in GlobalState.
-
-```
-{
-  id: number, - database key
-  text: string
 }
 ```
