@@ -6,8 +6,6 @@ const supabaseUrl = "https://tlrslrgqvxhjdajpayfb.supabase.co";
 
 const supabaseAnonKey = process.env.SUPABASE_KEY;
 
-console.log(supabaseAnonKey);
-
 export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
 	auth: {
 		storage: AsyncStorage,
