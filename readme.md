@@ -12,7 +12,7 @@ The project is created with React Native and Expo to ensure compability with any
 
 ## Video demonstrating the App functionalities:
 
-- To be done.
+- [Demonstration Video](https://northcoders.com/project-phase/books4u)
 
 ## Environment Variables
 
